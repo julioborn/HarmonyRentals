@@ -1,6 +1,8 @@
 package com.example.equipo1back;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,12 @@ public class ProductoController {
     @GetMapping("/getProductos")
     public List<Producto> getProductos() {
         return productoService.getProductos();
+    }
+
+    @PostMapping("/registrarProducto")
+    public ResponseEntity<String> agregarProducto(@RequestBody Producto producto) {
+        productoService.registrarProducto(producto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Producto creado exitosamente.");
     }
 
 }
