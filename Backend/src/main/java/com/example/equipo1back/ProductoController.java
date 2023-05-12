@@ -26,5 +26,10 @@ public class ProductoController {
         productoService.registrarProducto(producto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Producto creado exitosamente.");
     }
+    @DeleteMapping("/eliminarProducto/{id}")
+    public ResponseEntity<String> eliminarProducto(@PathVariable Integer id) {
+        productoService.eliminarProducto(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Producto eliminado exitosamente.");
+    }
 
 }
