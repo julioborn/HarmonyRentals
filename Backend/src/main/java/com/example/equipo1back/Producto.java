@@ -11,29 +11,23 @@ public class Producto {
     @Column(nullable = false)
     private Integer id;
 
-
     @Column(name = "nombre")
     private String nombre;
-
 
     @Column(name = "descripcion")
     private String descripcion;
 
-
     @Column(name = "imagen")
     private String imagen;
 
-
     @Column(name = "precio_x_dia")
     private Double precio_x_dia;
-
 
     @Column(name = "categoria_id")
     private Integer categoria_id;
 
 
-
-    //3 Constructores: 1 todos los atributos, 2 todos menos id, 3 vacío.
+    // Constructores: 1 todos los atributos, 2 todos menos id, 3 vacío.
 
     public Producto(Integer id, String nombre, String descripcion, String imagen, Double precio_x_dia, Integer categoria_id) {
         this.id = id;
@@ -43,7 +37,6 @@ public class Producto {
         this.precio_x_dia = precio_x_dia;
         this.categoria_id = categoria_id;
     }
-
     public Producto(String nombre, String descripcion, String imagen, Double precio_x_dia, Integer categoria_id) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -51,9 +44,7 @@ public class Producto {
         this.precio_x_dia = precio_x_dia;
         this.categoria_id = categoria_id;
         }
-
     public Producto() {
-
     }
 
     // getters and setters
