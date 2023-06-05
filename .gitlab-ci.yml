@@ -1,0 +1,77 @@
+stages:          
+  - build
+  - deploy
+
+build_backend:       
+  stage: build
+  image: maven:3.8.5-openjdk-17
+  script:
+    - echo "Building code Backend..."
+    - "cd Backend"
+    - "mvn clean"
+    - "mvn clean install"
+    - echo "Finished building the app."
+  artifacts:
+        name: mvn_build
+        paths:
+            - Backend/target/equipo1back-0.0.1-SNAPSHOT.jar
+  
+
+build_frontend:       
+  stage: build
+  image: node:16.14.2-alpine
+  script:
+    - echo "Compiling code Frontend..."
+    - cd frontEnd
+    - ls 
+    - npm --force install
+    - CI=false npm run build
+    - echo "Finished building the app."
+    - cd dist 
+    - ls
+    - cd ..
+    - pwd
+    - echo "Compile Complete!!!"
+  artifacts:
+    name: react_build
+    paths:
+         - ./frontEnd/dist
+
+
+deploy-backend:      
+  stage: deploy
+  needs: [build_backend]
+  image: ubuntu
+  before_script:
+        - apt-get update && apt-get install -y openssh-client
+        - cd Backend
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - touch ~/.ssh/config
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        - ssh-keyscan -H "$DEPLOY_SERVER_IP" >> ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
+  script:
+        - echo "Deploying application"
+        - pwd
+        - ls
+        - scp target/equipo1back-0.0.1-SNAPSHOT.jar ubuntu@ec2-3-145-94-82.us-east-2.compute.amazonaws.com:/home/ubuntu
+        - echo "Application successfully deployed."
+
+deploy_frontend:
+   stage: deploy
+   needs: [build_frontend]
+   image: python:3.6
+   script:
+        - echo "Installing aws command line"
+        - pip install awscli
+        - aws --version  
+        - cd frontEnd/
+        - echo "Uploading files to AWS Bucket"
+        - aws configure set aws_secret_key_id $AWS_ACCESS_KEY_ID
+        - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        - pwd
+        - ls
+        - aws s3 sync dist s3://buckets3-harmonyrentals-front 
