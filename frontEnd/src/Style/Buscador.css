@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&display=swap');
+
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Lato';
+}
+
+.boxBuscar {
+    padding-top: 6.5rem ;
+    padding-bottom: 0.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0 auto;
+    background-color: #16213e77;
+}
+
+.input {
+    background-color: #f6f4f4;
+    box-shadow: 2px 2px 3px #16213ea8;
+    width: 25vw;
+}
+.date{
+    display: flex;
+}
+
+.date input {
+    background-color: #f6f4f4;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 2px 2px 3px #16213ea8;
+    padding-left: 10px;
+    height: 3em;
+    width: 20vw;
+}
+
+Button.btnBuscar {
+    margin-top: 3px;
+    height: 40px;
+    text-transform: none;
+    color: #ffffff;
+    border-radius: 3px;
+    background-color: #16213E;
+    box-shadow: 2px 2px 3px #16213ea8;
+    display: block;
+}
+
+@media screen and (max-width: 1260px) {
+    .boxBuscar{
+        padding: 6.5em 0 0.5em 0;
+    }
+    .input {
+        width: 40vw;
+    }
+    .date input {
+        width: 20vw;
+    }
+   
+}
+
+@media screen and (max-width: 999px) {
+    .boxBuscar{
+        padding: 6.5em 0 0.5em 0;   
+    }
+    .input {
+        width: 50vw;
+    }
+    .date input {
+        width: 25vw;
+    }
+   
+}
+
+@media screen and (max-width: 960px) {
+    .input {
+        width: 50vw;
+    }
+    .date input {
+        width: 25vw;
+    } 
+}
+
+@media screen and (max-width: 600px) {
+    .boxBuscar{
+        padding:9em 0 3em 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        height: 12em; 
+    }
+    .boxBuscar .input{
+        width: 14.5em;
+    }
+    .date input {
+        width: auto;  
+        justify-content: space-between;
+    }   
+}
+

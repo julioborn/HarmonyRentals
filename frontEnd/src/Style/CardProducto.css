@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&display=swap');
+
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 300px;
+    margin: 2.5vh 0;
+    cursor: pointer;
+    border-color: #16213e91;
+    box-shadow: 3px 4px 5px 3px #404040;
+}
+
+.media {
+    margin-top: 35px;
+    /* margin: 10px; */
+    height: 200px;
+    width: auto;
+}
+
+.typo {
+    color: #16213E;
+    height: 50px;
+    border-top: 2px solid #16213E;
+}
+
+
+@media screen and (max-width: 516px) {}
