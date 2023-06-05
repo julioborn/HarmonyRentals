@@ -42,7 +42,7 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
     const fetchUsuario = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/usuario/${usuarioId}`
+          `http://3.145.94.82:8080/usuario/${usuarioId}`
         );
         const data = await response.json();
         setUsuario(data);
@@ -59,7 +59,7 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
     const { rol, ...otherValues } = values;
     try {
       const response = await fetch(
-        `http://localhost:8080/usuario/modificar/${usuarioId}`,
+        `http://3.145.94.82:8080/usuario/modificar/${usuarioId}`,
         {
           method: "PUT",
           headers: {

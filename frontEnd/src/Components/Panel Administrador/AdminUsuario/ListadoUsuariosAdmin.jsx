@@ -45,7 +45,7 @@ const ListadoUsuariosAdmin = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/usuario/todos");
+      const response = await fetch("http://3.145.94.82:8080/usuario/todos");
       const data = await response.json();
       setUsuarios(data);
       setTotalPages(Math.ceil(data.length / itemsPerPage));
@@ -66,7 +66,7 @@ const ListadoUsuariosAdmin = () => {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/usuario/eliminar/${id}`,
+        `http://3.145.94.82:8080/usuario/eliminar/${id}`,
         {
           method: "DELETE",
         }

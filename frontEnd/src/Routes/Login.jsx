@@ -17,7 +17,7 @@ const Login = () => {
       password: values.password
     };
 
-    fetch('http://localhost:8080/auth/login', {
+    fetch('http://3.145.94.82:8080/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

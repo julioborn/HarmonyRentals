@@ -33,7 +33,7 @@ const theme = createTheme({
   },
 });
 
-const endpoint = "http://localhost:8080/producto/todos";
+const endpoint = "http://3.145.94.82:8080/producto/todos";
 
 const ListadoProductosAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,7 +66,7 @@ const ListadoProductosAdmin = () => {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/producto/eliminar/${id}`,
+        `http://3.145.94.82:8080/producto/eliminar/${id}`,
         {
           method: "DELETE",
         }

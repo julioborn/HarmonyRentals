@@ -39,7 +39,7 @@ const AgregarUsuarioForm = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await fetch("http://localhost:8080/usuario/agregar", {
+      const response = await fetch("http://3.145.94.82:8080/usuario/agregar", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -43,13 +43,13 @@ const ModificarProductoForm = ({ productId }) => {
     const fetchProducto = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/producto/${productId}`
+          `http://3.145.94.82:8080/producto/${productId}`
         );
         const data = await response.json();
         setProducto(data);
         // Fetch the category details
         const categoriaResponse = await fetch(
-          `http://localhost:8080/categoria/${data.categoria_id}`
+          `http://3.145.94.82:8080/categoria/${data.categoria_id}`
         );
         const categoriaData = await categoriaResponse.json();
         setSelectedCategoria(categoriaData);
@@ -66,7 +66,7 @@ const ModificarProductoForm = ({ productId }) => {
     const { categoria_id, ...otherValues } = values;
     try {
       const response = await fetch(
-        `http://localhost:8080/producto/modificar/${productId}`,
+        `http://3.145.94.82:8080/producto/modificar/${productId}`,
         {
           method: "PUT",
           headers: {
@@ -102,7 +102,7 @@ const ModificarProductoForm = ({ productId }) => {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await fetch("http://localhost:8080/categoria/todas");
+        const response = await fetch("http://3.145.94.82:8080/categoria/todas");
         const data = await response.json();
         setCategorias(data);
         setLoadingCategorias(false);

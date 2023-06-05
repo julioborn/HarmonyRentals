@@ -22,7 +22,7 @@ const ProductosXCategoria = ({ categoria_id, selectedCategoryDetalle }) => {
     useEffect(() => {
         const fetchProductsByCategory = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/producto/byCategoria/${categoria_id}`);
+                const response = await fetch(`http://3.145.94.82:8080/producto/byCategoria/${categoria_id}`);
                 if (response.ok) {
                     const data = await response.json();
                     setProducts(data);                   

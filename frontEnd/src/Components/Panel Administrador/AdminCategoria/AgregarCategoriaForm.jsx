@@ -38,7 +38,7 @@ const AgregarCategoriaForm = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await fetch("http://localhost:8080/categoria/agregar", {
+      const response = await fetch("http://3.145.94.82:8080/categoria/agregar", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

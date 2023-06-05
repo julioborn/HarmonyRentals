@@ -46,7 +46,7 @@ const ListadoCategoriasAdmin = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:8080/categoria/todas", {
+      const response = await fetch("http://3.145.94.82:8080/categoria/todas", {
         headers: {
           Authorization: `Bearer ${token}`,
 

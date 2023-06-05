@@ -31,7 +31,7 @@ const theme = createTheme({
 
 const ProductoDetalle = () => {
   const { id } = useParams();
-  const endpoint = `http://localhost:8080/producto/${id}`;
+  const endpoint = `http://3.145.94.82:8080/producto/${id}`;
   const [product, setProduct] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);

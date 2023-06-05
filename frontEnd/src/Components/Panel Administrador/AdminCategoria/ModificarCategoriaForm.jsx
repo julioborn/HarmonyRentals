@@ -37,7 +37,7 @@ const ModificarCategoriaForm = ({ categoriaId }) => {
     const fetchCategoria = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/categoria/${categoriaId}`
+          `http://3.145.94.82:8080/categoria/${categoriaId}`
         );
         const data = await response.json();
         setCategoria(data);       
@@ -54,7 +54,7 @@ const ModificarCategoriaForm = ({ categoriaId }) => {
     const { ...otherValues } = values;
     try {
       const response = await fetch(
-        `http://localhost:8080/categoria/modificar/${categoriaId}`,
+        `http://3.145.94.82:8080/categoria/modificar/${categoriaId}`,
         {
           method: "PUT",
           headers: {

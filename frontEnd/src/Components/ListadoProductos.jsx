@@ -22,7 +22,7 @@ const ListadoProductos = () => {
     }, [currentPage]);
     const obtenerProductos = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/producto/paginado?page=${currentPage}&size=10`);
+            const response = await fetch(`http://3.145.94.82:8080/producto/paginado?page=${currentPage}&size=10`);
             const data = await response.json();
             setProductos(data.content);
             setTotalPages(data.totalPages);

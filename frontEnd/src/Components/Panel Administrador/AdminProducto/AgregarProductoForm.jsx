@@ -46,7 +46,7 @@ const AgregarProductoForm = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await fetch("http://localhost:8080/producto/agregar", {
+      const response = await fetch("http://3.145.94.82:8080/producto/agregar", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const AgregarProductoForm = () => {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const response = await fetch("http://localhost:8080/categoria/todas");
+        const response = await fetch("http://3.145.94.82:8080/categoria/todas");
         const data = await response.json();
         setCategorias(data);
       } catch (error) {

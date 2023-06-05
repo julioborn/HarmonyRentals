@@ -13,7 +13,7 @@ const theme = createTheme({
   },
 });
 
-const endpoint = "http://localhost:8080/producto/random";
+const endpoint = "http://3.145.94.82:8080/producto/random";
 
 const Random10 = () => {
   const [productos, setProductos] = useState([]);

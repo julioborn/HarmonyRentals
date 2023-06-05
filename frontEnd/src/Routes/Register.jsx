@@ -57,7 +57,7 @@ const Register = () => {
 
   const handleSubmit = async (values) => {
     if (validationSchema) {
-      const response = await fetch('http://localhost:8080/auth/registrar', {
+      const response = await fetch('http://3.145.94.82:8080/auth/registrar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
