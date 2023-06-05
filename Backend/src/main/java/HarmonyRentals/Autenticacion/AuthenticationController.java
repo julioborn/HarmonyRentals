@@ -3,6 +3,8 @@ package HarmonyRentals.Autenticacion;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static HarmonyRentals.HarmonyRentalsApp.endpoint;
+
 @RestController
 @RequestMapping ("/auth")
 
@@ -12,7 +14,7 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = endpoint)
     @PostMapping("/registrar")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
@@ -20,7 +22,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = endpoint)
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request

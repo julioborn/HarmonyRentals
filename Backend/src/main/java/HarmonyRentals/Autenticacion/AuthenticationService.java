@@ -36,7 +36,7 @@ public class AuthenticationService {
 
         usuarioRepository.save(usuario);
         String jwtToken = jwtService.generateToken(usuario);
-        String validationLink = "http://localhost:8080/verificar?token=" + jwtToken; // Updated validation link
+        String validationLink = "${endpoint}/verificar?token=" + jwtToken; // Updated validation link
         String emailBody = "Gracias por registrarte. Haz clic en el siguiente enlace para validar tu cuenta:<br><br>"
                 + "<a href=\"" + validationLink + "\">Validar cuenta</a>";
         mailService.sendMail(request.getEmail(), "Bienvenido/a a nuestra aplicación", emailBody);
