@@ -46,7 +46,7 @@ build_frontend:
 
 deploy-backend:      
   stage: deploy
-  needs: [build_backend]
+  #needs: [build_backend]
   when: manual
   image: ubuntu
   before_script:
@@ -69,7 +69,7 @@ deploy-backend:
 
 deploy_frontend:
    stage: deploy
-   needs: [build_frontend]
+   #needs: [build_frontend]
    when: manual
    image: python:3.6
    script:
