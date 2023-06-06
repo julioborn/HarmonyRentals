@@ -56,10 +56,20 @@ deploy-backend:
         - chmod 644 ~/.ssh/known_hosts
   script:
         - echo "Deploying application"
-        - pwd
-        - ls
+        - ssh ubuntu@ec2-3-145-94-82.us-east-2.compute.amazonaws.com "sudo systemctl stop harmonyrentals.service"
         - scp target/equipo1back-0.0.1-SNAPSHOT.jar ubuntu@ec2-3-145-94-82.us-east-2.compute.amazonaws.com:/home/ubuntu
-        - echo "Application successfully deployed."
+        - ssh ubuntu@ec2-3-145-94-82.us-east-2.compute.amazonaws.com "sudo systemctl start harmonyrentals.service"
+        - echo "Finished deploying the app."
+
+
+
+
+
+        #- echo "Deploying application"
+        #- pwd
+        #- ls
+        #- scp target/equipo1back-0.0.1-SNAPSHOT.jar ubuntu@ec2-3-145-94-82.us-east-2.compute.amazonaws.com:/home/ubuntu
+        #- echo "Application successfully deployed."
 
 deploy_frontend:
    stage: deploy
