@@ -15,6 +15,9 @@ build_backend:
         name: mvn_build
         paths:
             - Backend/target/equipo1back-0.0.1-SNAPSHOT.jar
+  rules:
+    - changes:
+        - BackEnd/**/*
   
 
 build_frontend:       
@@ -36,6 +39,9 @@ build_frontend:
     name: react_build
     paths:
          - ./frontEnd/dist
+  rules:
+    - changes:
+      - frontEnd/**/*
 
 
 deploy-backend:      
@@ -60,16 +66,6 @@ deploy-backend:
         - scp target/equipo1back-0.0.1-SNAPSHOT.jar ubuntu@ec2-3-145-94-82.us-east-2.compute.amazonaws.com:/home/ubuntu
         - ssh ubuntu@ec2-3-145-94-82.us-east-2.compute.amazonaws.com "sudo systemctl start harmonyrentals.service"
         - echo "Finished deploying the app."
-
-
-
-
-
-        #- echo "Deploying application"
-        #- pwd
-        #- ls
-        #- scp target/equipo1back-0.0.1-SNAPSHOT.jar ubuntu@ec2-3-145-94-82.us-east-2.compute.amazonaws.com:/home/ubuntu
-        #- echo "Application successfully deployed."
 
 deploy_frontend:
    stage: deploy
