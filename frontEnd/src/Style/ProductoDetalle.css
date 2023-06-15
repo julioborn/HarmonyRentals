@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&display=swap");
+
+.contex-detalle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(200, 201, 202, 1) 9%,
+    rgba(255, 255, 255, 1) 50%
+  );
+}
+
+.paper {
+  color: #51545d61;
+  display: flex;
+  align-items: center;
+  align-content:flex-start;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 7em;
+  margin-bottom: 5em;
+  padding-top: 4em;
+  height: auto;
+  width: 95vw;
+}
+
+.img-list {
+  margin-right: 10px;
+  display: flex;
+  object-fit: contain;
+  flex-direction: column;
+  cursor: pointer;
+  width: 10%;
+  max-height: 100%;
+  justify-content: space-around;
+}
+
+.btn-add {
+  text-transform: none;
+  color: #16213e;
+}
+
+.product-img {
+  display: flex;
+  max-width: 30vw;
+  max-height: 50vh;
+  border-radius: 1px;
+  cursor: pointer;
+  margin: 20px;
+  max-width: 25vw;
+  max-height: 20rem;
+}
+
+.product-img:hover {
+  transform: scale(1.1);
+}
+
+.puntuar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 8rem;
+  text-align: center;
+}
+
+/* CustomCarouselStyles.css */
+.custom-carousel {
+  overflow: hidden !important;
+}
+
+
+.card-cld{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;  
+  padding-top: 10px;
+  padding-bottom: 15px;
+  height: 30vh; 
+  width: 100%;
+  cursor: pointer;
+
+}
+
+.poli-fecha{
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5em;
+  width: 85vw;
+}
+
+.text-fecha{
+  background-color: #c8c9ca;
+  box-shadow: 1px 1px 4px 0px;
+  border-radius: 3px 3px 0px 0px;
+  color: #16213e;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.btn-volver{
+  position: absolute;
+  top: 15em;
+
+}
+
+/*--------------------------------MEDIAS---------------------------------------*/
+
+
+@media screen and (max-width: 2400px) {
+  .btn-volver{
+    right: 17vw; 
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .img-list {
+    display: none !important;
+  }
+  .poli-fecha{
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 5em;
+  }
+  
+.btn-volver {
+    display: none;
+  }
+  
+}
+
+@media screen and (max-width: 1024px) {
+  #poliList{
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 900px) {
+  body {
+    padding-top: 2em;
+    padding-bottom: 40px;
+  }
+
+  .paper {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 90%;
+  }
+  .img-list {
+    display: none !important;
+  }
+  .product-img {
+    margin-top: 15px;
+    display: flex;
+    max-width: 60vw;
+    max-height: 50vh;
+    border-radius: 1px;
+    cursor: pointer;
+  }
+}
+@media screen and (max-width: 660px) {
+  #poliList{
+    display: flex;
+    flex-direction: column;
+  }
+  #calendarios{
+    display: flex;
+    flex-direction: column;
+    height: 32em;
+    width: 16em;
+  }
+
+}
