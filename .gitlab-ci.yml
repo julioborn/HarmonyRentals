@@ -15,9 +15,9 @@ build_backend:
         name: mvn_build
         paths:
             - Backend/target/equipo1back-0.0.1-SNAPSHOT.jar
-  rules:
-    - changes:
-        - BackEnd/**/*
+  #rules:
+  #  - changes:
+  #      - BackEnd/**/*
   
 
 build_frontend:       
@@ -39,9 +39,9 @@ build_frontend:
     name: react_build
     paths:
          - ./frontEnd/dist
-  rules:
-    - changes:
-      - frontEnd/**/*
+  #rules:
+  #  - changes:
+  #    - frontEnd/**/*
 
 
 deploy-backend:      
