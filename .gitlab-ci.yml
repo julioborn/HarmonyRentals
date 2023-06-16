@@ -15,9 +15,9 @@ build_backend:
         name: mvn_build
         paths:
             - Backend/target/equipo1back-0.0.1-SNAPSHOT.jar
-  #rules:
-  #  - changes:
-  #      - BackEnd/**/*
+  rules:
+    - changes:
+        - BackEnd/**/*
   
 
 build_frontend:       
@@ -39,15 +39,15 @@ build_frontend:
     name: react_build
     paths:
          - ./frontEnd/dist
-  #rules:
-  #  - changes:
-  #    - frontEnd/**/*
+  rules:
+    - changes:
+      - frontEnd/**/*
 
 
 deploy-backend:      
   stage: deploy
   #needs: [build_backend]
-  #when: manual
+  when: manual
   image: ubuntu
   before_script:
         - apt-get update && apt-get install -y openssh-client
@@ -70,7 +70,7 @@ deploy-backend:
 deploy_frontend:
    stage: deploy
    #needs: [build_frontend]
-   #when: manual
+   when: manual
    image: python:3.6
    script:
         - echo "Installing aws command line"
