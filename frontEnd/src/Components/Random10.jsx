@@ -17,7 +17,7 @@ const endpoint = "http://3.145.94.82:8080/producto/random";
 
 const Random10 = () => {
   const [productos, setProductos] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const initialRender = useRef(true);
   const fetchRandomProducts = async () => {
