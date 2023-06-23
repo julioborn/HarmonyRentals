@@ -22,7 +22,7 @@ const Random10 = () => {
   const initialRender = useRef(true);
   const fetchRandomProducts = async () => {
     try {
-      setIsLoading(true);
+      //setIsLoading(true);
       const response = await fetch(endpoint);
       if (response.ok) {
         const data = await response.json();
