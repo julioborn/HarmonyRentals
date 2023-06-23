@@ -65,7 +65,7 @@ public class ProductoController {
         }
     }
 
-    @CrossOrigin(origins = endpoint)
+  //  @CrossOrigin(origins = endpoint)
     @GetMapping("/random")
     public ResponseEntity<List<ProductoDTO>> getRandomProductos() {
         List<Producto> productos = productoRepository.getRandomProductos();
