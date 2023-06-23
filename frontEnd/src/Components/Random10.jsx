@@ -17,12 +17,12 @@ const endpoint = "http://3.145.94.82:8080/producto/random";
 
 const Random10 = () => {
   const [productos, setProductos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const initialRender = useRef(true);
   const fetchRandomProducts = async () => {
     try {
-      //setIsLoading(true);
+      setIsLoading(true);
       const response = await fetch(endpoint);
       if (response.ok) {
         const data = await response.json();
