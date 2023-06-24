@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box, Grid, Typography } from '@mui/material';
 import '../Style/ProductoDetalle.css'
 import Loading from "./Loading";
+import swal from "sweetalert";
 const theme = createTheme({
     palette: {
         primary: {
@@ -42,9 +43,15 @@ const ProductosXCategoria = ({ categoria_id, categoriaDetalle }) => {
     }, [categoria_id]);
 
     if (error) {
-        return <p>Error: {error}</p>;
+        swal({
+          icon: 'error',
+          title: 'Error',
+          text: error,
+          timer: 3000,
+          buttons: false,
+        });
+        return null;
     }
-
     return (
         <ThemeProvider theme={theme}>
             <Box

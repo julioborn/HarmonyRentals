@@ -32,8 +32,7 @@ const Random10 = () => {
       }
     } catch (error) {
       setError(error.message);
-      console.log(error)
-          } finally {
+    } finally {
       setIsLoading(false);
       
     }
