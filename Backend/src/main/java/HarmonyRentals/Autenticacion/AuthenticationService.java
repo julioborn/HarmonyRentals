@@ -36,7 +36,7 @@ public class AuthenticationService {
 
         usuarioRepository.save(usuario);
         String jwtToken = jwtService.generateToken(usuario);
-        String validationLink = "http://buckets3-harmonyrentals-front.s3-website.us-east-2.amazonaws.com/verificar?token=" + jwtToken; // Updated validation link
+        String validationLink = "http://3.129.13.181:8080/verificar?token=" + jwtToken; // Updated validation link
         String emailBody = "Gracias por registrarte. Haz clic en el siguiente enlace para validar tu cuenta:<br><br>"
                 + "<a href=\"" + validationLink + "\">Validar cuenta</a>";
         mailService.sendMail(request.getEmail(), "Bienvenido/a a nuestra aplicación", emailBody);
