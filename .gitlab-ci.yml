@@ -48,6 +48,8 @@ deploy-backend:
   stage: deploy
   #needs: [build_backend]
   #when: manual
+  dependencies:
+    - build_backend
   image: ubuntu
   before_script:
         - apt-get update && apt-get install -y openssh-client
@@ -71,6 +73,8 @@ deploy_frontend:
    stage: deploy
    #needs: [build_frontend]
    #when: manual
+   dependencies:
+    - build_frontend
    image: python:3.6
    script:
         - echo "Installing aws command line"
