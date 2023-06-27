@@ -82,7 +82,7 @@ const Random10 = () => {
 
   const fetchRandomProducts = async () => {
   try {
-    //setIsLoading(true);
+    setIsLoading(true);
     const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/producto/random`);
     console.log("Realizando get del random al backend");
     if (response.status === 200) {
@@ -95,7 +95,7 @@ const Random10 = () => {
   } catch (error) {
     setError(error.message);
   } finally {
-    //setIsLoading(false);
+    setIsLoading(false);
     console.log("Si ves esto es porque no pudo hacer el get del rendom");
   }
 };
@@ -488,8 +488,7 @@ const BodyHome = () => {
           ))}
         </Box>
       )}
-      {<Random10 />
-      /* {!categoriaElegida && !resultadoBusqueda ? (
+      {!categoriaElegida && !resultadoBusqueda ? (
         <Random10 />
       ) : resultadoBusqueda && resultadoBusqueda.length > 0 ? (
         <ResultadosBusqueda productos={resultadoBusqueda} />
@@ -498,7 +497,7 @@ const BodyHome = () => {
           categoria_id={categoriaElegida}
           categoriaDetalle={categoriaDetalle}
         />
-      ) : null} */}
+      ) : null}
     </Box>
   );
 };
