@@ -103,7 +103,9 @@ const Random10 = () => {
 useEffect(() => {
   if (initialRender.current) {
     initialRender.current = false;
+    console.log("Hola soy useEffect");
   } else {
+    console.log("Hola soy el else");
     fetchRandomProducts();
   }
 }, []);
@@ -171,13 +173,13 @@ useEffect(() => {
 
 /////////////////////////
 const BodyHome = () => {
-  const [categoriaElegida, setCategoriaElegida] = useState(null);
+  const [categoriaElegida, setCategoriaElegida] = useState(false);
   const [categoriaDetalle, setCategoriaDetalle] = useState("");
   const [inputBuscador, setInputBuscador] = useState("");
   const [buscadorDinamico, setbuscadorDinamico] = useState([]);
   const [idProductoSeleccionado, setIdProductoSeleccionado] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [resultadoBusqueda, setResultadoBusqueda] = useState(null);
+  const [resultadoBusqueda, setResultadoBusqueda] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 600 });
   const [fechaDesde, setFechaDesde] = useState(null);
   const [fechaHasta, setFechaHasta] = useState(null);
@@ -488,7 +490,8 @@ const BodyHome = () => {
           ))}
         </Box>
       )}
-      {!categoriaElegida && !resultadoBusqueda ? (
+      {<Random10 />
+      /* {!categoriaElegida && !resultadoBusqueda ? (
         <Random10 />
       ) : resultadoBusqueda && resultadoBusqueda.length > 0 ? (
         <ResultadosBusqueda productos={resultadoBusqueda} />
@@ -497,7 +500,7 @@ const BodyHome = () => {
           categoria_id={categoriaElegida}
           categoriaDetalle={categoriaDetalle}
         />
-      ) : null}
+      ) : null} */}
     </Box>
   );
 };
