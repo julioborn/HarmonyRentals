@@ -23,20 +23,17 @@ const Random10 = () => {
 
   const fetchRandomProducts = async () => {
   try {
-    //setIsLoading(true);
+    setIsLoading(true);
     const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/producto/random`);
-    console.log("Hizo consulta get al backend");
     if (response.status === 200) {
       setProductos(response.data);
-      console.log("Si ves esto es porque no mostros los 10 productos random");
     } else {
       setError(`Error: ${response.status}`);
     }
   } catch (error) {
     setError(error.message);
   } finally {
-    setIsLoading(true);
-    console.log("Si ves esto es porque no mostros los 10 productos random");
+    setIsLoading(false);
   }
 };
 

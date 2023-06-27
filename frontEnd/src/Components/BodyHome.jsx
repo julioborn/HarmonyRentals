@@ -82,17 +82,21 @@ const Random10 = () => {
 
   const fetchRandomProducts = async () => {
   try {
-    setIsLoading(true);
+    //setIsLoading(true);
     const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/producto/random`);
+    console.log("Realizando get del random al backend");
     if (response.status === 200) {
+      console.log("Si ves esto es porque devolvio un 200");
       setProductos(response.data);
     } else {
       setError(`Error: ${response.status}`);
+      console.log("Si ves esto es porque no pudo hacer el get del rendom");
     }
   } catch (error) {
     setError(error.message);
   } finally {
-    setIsLoading(false);
+    //setIsLoading(false);
+    console.log("Si ves esto es porque no pudo hacer el get del rendom");
   }
 };
 
