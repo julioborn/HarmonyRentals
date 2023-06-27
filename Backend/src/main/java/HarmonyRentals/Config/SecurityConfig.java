@@ -40,7 +40,9 @@ public class SecurityConfig {
                         "/favoritos/**",
                         "/alquiler/**",
                         "/verificar/**",
-                        "/puntuacion/**"
+                        "/puntuacion/**",
+                        "/harmonyrentalss.ddns.net/",
+                        "/admin/**"
                         )
                 .permitAll()
                 .anyRequest()
