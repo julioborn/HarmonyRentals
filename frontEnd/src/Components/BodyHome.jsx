@@ -104,6 +104,7 @@ useEffect(() => {
   if (initialRender.current) {
     initialRender.current = false;
     console.log("Hola soy useEffect");
+    fetchRandomProducts();
   } else {
     console.log("Hola soy el else");
     fetchRandomProducts();
