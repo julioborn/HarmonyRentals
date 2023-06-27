@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Link,
   TextField,
   Button,
   Autocomplete,
-  Grid,
+  Grid,Typography
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "../Style/Categoria.css";
 import "../Style/Buscador.css";
 import { useMediaQuery } from "react-responsive";
 import { Carousel } from "react-responsive-carousel";
-import Random10 from "./Random10";
+//import Random10 from "./Random10";
 import ProductosXCategoria from "./ProductosXCategoria";
 import ResultadosBusqueda from "./ResultadosBusqueda";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -20,7 +20,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import CalendarHome from "./CalendarHome";
 import PasosDeBusqueda from "./PasosDeBusqueda";
 import axios from "axios";
-
+import Loading from "./Loading";
+import { CardProducto } from "./CardProducto";
 //array de categorias
 const categories = [
   {
@@ -72,6 +73,99 @@ const CustomTextField = React.forwardRef(({ InputProps, ...props }, ref) => (
   />
 ));
 
+// componente Random10 importado de urgencia
+const Random10 = () => {
+  const [productos, setProductos] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const initialRender = useRef(true);
+
+  const fetchRandomProducts = async () => {
+  try {
+    setIsLoading(true);
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/producto/random`);
+    if (response.status === 200) {
+      setProductos(response.data);
+    } else {
+      setError(`Error: ${response.status}`);
+    }
+  } catch (error) {
+    setError(error.message);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+useEffect(() => {
+  if (initialRender.current) {
+    initialRender.current = false;
+  } else {
+    fetchRandomProducts();
+  }
+}, []);
+
+  return (
+    
+      <Box
+        id="random10-container"
+        sx={{
+          height: 'auto',
+          marginBottom: "7vh",
+          backgroundColor: "#F0F0F0"
+        }}
+      >
+        {isLoading ? (
+          <Loading containerHeight={"40vh"} />
+        ) : (
+          <>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Typography
+                sx={{
+                  width: '100vw',
+                  color: "#16213E",
+                  textAlign: "center",
+                  fontSize: 23,
+                  fontWeight: "bolder",
+                  height: 'auto',
+                  marginTop: 2,
+                  marginBottom: 3,
+                }}
+                id="recomendados"
+              >
+                Instrumentos Recomendados
+              </Typography>
+            </Box>
+            <Box >
+              <Grid container spacing={2} >
+                {productos.map((producto, index) => (
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    lg={2.4}
+                    key={producto.id}
+                    id="random"
+                  >
+                    <CardProducto producto={producto} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </>
+        )}
+      </Box>
+  
+  );
+};
+
+
+/////////////////////////
 const BodyHome = () => {
   const [categoriaElegida, setCategoriaElegida] = useState(null);
   const [categoriaDetalle, setCategoriaDetalle] = useState("");

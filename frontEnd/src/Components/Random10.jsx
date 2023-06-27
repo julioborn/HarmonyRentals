@@ -14,7 +14,7 @@ const theme = createTheme({
   },
 });
 
-const endpoint = `${import.meta.env.VITE_BACKEND_URL}/producto/random`;
+
 const Random10 = () => {
   const [productos, setProductos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +24,7 @@ const Random10 = () => {
   const fetchRandomProducts = async () => {
   try {
     setIsLoading(true);
-    const response = await axios.get(endpoint);
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/producto/random`);
     if (response.status === 200) {
       setProductos(response.data);
     } else {
