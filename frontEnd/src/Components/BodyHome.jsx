@@ -497,7 +497,7 @@ const BodyHome = () => {
           categoria_id={categoriaElegida}
           categoriaDetalle={categoriaDetalle}
         />
-      ) : null}
+      ) : <Random10 />}
     </Box>
   );
 };
