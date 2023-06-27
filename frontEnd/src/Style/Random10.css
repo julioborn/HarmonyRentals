@@ -1,0 +1,14 @@
+
+#random{
+  
+  display: flex;
+  justify-content: center;  
+}
+
+
+@media (max-width: 426px) {
+    #recomendados {
+        width: 100%;
+      font-size: 17px;
+    }
+  }
