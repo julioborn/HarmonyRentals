@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 const validationSchema = Yup.object({
   nombre: Yup.string().required("El nombre es requerido"),
@@ -23,7 +24,6 @@ const validationSchema = Yup.object({
   rol: Yup.string().required("El rol es requerido"),
   verificado: Yup.number().required("El estado de verificación es requerido"),
 });
-
 const initialValues = {
   nombre: "",
   apellido: "",
@@ -39,17 +39,13 @@ const AgregarUsuarioForm = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await fetch("http://3.145.94.82:8080/usuario/agregar", {
-        method: "POST",
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/usuario/agregar`, values, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
       });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
+      const responseData = response.data;
+      if (response.status !== 200) {
         throw new Error(responseData.message || "An error occurred.");
       }
       setUsuario(responseData);

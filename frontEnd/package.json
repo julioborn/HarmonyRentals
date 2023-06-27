@@ -10,14 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^4.5.8",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.130",
     "@mui/material": "^5.13.0",
     "@mui/styled-engine-sc": "^5.12.0",
+    "@mui/system": "^5.13.6",
+    "axios": "^1.4.0",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
     "formik": "^2.2.9",
@@ -38,7 +40,7 @@
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "eslint": "^8.38.0",
-    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react": "^7.25.3",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
     "vite": "^4.3.2"

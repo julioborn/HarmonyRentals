@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import axios from 'axios';
 
 const Register = () => {
   const { state, dispatch } = useContext(GlobalContext);
@@ -57,36 +58,40 @@ const Register = () => {
 
   const handleSubmit = async (values) => {
     if (validationSchema) {
-      const response = await fetch('http://3.145.94.82:8080/auth/registrar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (response.ok) {
-        swal({
-          title: 'Usuario Registrado Correctamente',
-          text: '¡Inicia Sesión para Ingresar!',
-          icon: 'success',
-          timer: 2500,
-          buttons: false,
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/registrar`, values, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         });
-        const data = await response.json();
-        navigate('/login');
-      } else {
-        // Registro fallido
-        const error = await response.text();
+        if (response.status === 200) {
+          swal({
+            title: 'Usuario Registrado Correctamente',
+            text: '¡Inicia Sesión para Ingresar!',
+            icon: 'success',
+            timer: 2500,
+            buttons: false
+          });
+          // Haz algo con los datos de la respuesta si es necesario
+          navigate('/login');
+        } else {
+          // Registro fallido
+          const error = response.data;
+          dispatch({
+            type: 'REGISTER_ERROR',
+            payload: error
+          });
+        }
+      } catch (error) {
         dispatch({
           type: 'REGISTER_ERROR',
-          payload: error,
+          payload: 'Por favor, completa todos los campos correctamente.'
         });
       }
     } else {
       dispatch({
         type: 'REGISTER_ERROR',
-        payload: 'Por favor, completa todos los campos correctamente.',
+        payload: 'Por favor, completa todos los campos correctamente.'
       });
     }
   };

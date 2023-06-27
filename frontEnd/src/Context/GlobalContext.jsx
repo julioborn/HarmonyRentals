@@ -5,18 +5,31 @@ export const GlobalContext = createContext({});
 const globalInitialState = {
     auth: {
         isLogged: !!sessionStorage.getItem('token'),
-        user: null,
+        usuario: null,
+        nombre: null,
+        apellido: null,
         isClient: false,
         isAdmin: false,
         token: null,
         data: [],
     },
+
     register: {
         user: null,
         error: null,
     },
     theme: {
         mode: 'light',
+        light: {
+            primaryColor: '#16213E',
+            backgroundColor: '#FFFFFF',
+            fontColor: '#16213E',
+        },
+        dark: {
+            primaryColor: '#FFFFFF',
+            backgroundColor: '#16213E',
+            fontColor: '#FFFFFF',
+        },
     },
     favorites: [],
 };

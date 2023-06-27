@@ -65,7 +65,7 @@ public class ProductoController {
         }
     }
 
-  //  @CrossOrigin(origins = endpoint)
+    @CrossOrigin(origins = endpoint)
     @GetMapping("/random")
     public ResponseEntity<List<ProductoDTO>> getRandomProductos() {
         List<Producto> productos = productoRepository.getRandomProductos();
@@ -115,7 +115,7 @@ public class ProductoController {
         }
     }
     @CrossOrigin(origins = endpoint)
-    @RequestMapping(value = "/modificar/{id}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/modificar/{id}", method = RequestMethod.PUT)
     public Producto modificarProducto(@PathVariable Integer id, @RequestBody ProductoDTO productoDTO){
         return productoService.modificarProducto(id, productoDTO);
     }

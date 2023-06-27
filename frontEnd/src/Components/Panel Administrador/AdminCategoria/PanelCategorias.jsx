@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Typography, Tabs, Tab } from "@mui/material";
-
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import AgregarCategoriaForm from "./AgregarCategoriaForm";
 import ListadoCategoriasAdmin from "./ListadoCategoriasAdmin";
 
@@ -22,24 +21,25 @@ const PanelCategorias = () => {
   return (
     <>
       <Box
+        className="produ-box"
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          padding: "20px"
         }}
       >
         <Typography sx={{ textAlign: "center", fontSize: "30px", pt: "5vh" }}>
-          Categorias
+          Categorías
         </Typography>
-
         {/* Tabs Component */}
         <Tabs
           value={activeTab}
           onChange={(event, newValue) => setActiveTab(newValue)}
           centered
         >
-          <Tab label="Listado"/>
-          <Tab label="Agregar"/>
+          <Tab label="Listado" sx={{ textTransform: "none", fontSize: "15px" }} />
+          <Tab label="Agregar" sx={{ textTransform: "none", fontSize: "15px" }} />
         </Tabs>
 
         {/* Content for the selected tab */}

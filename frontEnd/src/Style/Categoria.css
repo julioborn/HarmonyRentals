@@ -14,7 +14,8 @@
   cursor: pointer;
   padding-top: 3vh;
   padding-bottom: 3vh;
-  background: linear-gradient(0deg, #ffffff 3%, #c8c9ca 15%, #fcfcfc 100%);
+  /*background: linear-gradient(0deg, #ffffff 3%, #c8c9ca 15%, #fcfcfc 100%);*/
+  background-color: #F0F0F0;
 }
 
 .catego {

@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box, Grid, Typography } from '@mui/material';
 import '../Style/ProductoDetalle.css'
 import Loading from "./Loading";
-import swal from "sweetalert";
+import axios from 'axios';
 const theme = createTheme({
     palette: {
         primary: {
@@ -20,14 +20,15 @@ const ProductosXCategoria = ({ categoria_id, categoriaDetalle }) => {
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         const fetchProductsByCategory = async () => {
             try {
                 setIsLoading(true);
-                const response = await fetch(`http://3.145.94.82:8080/producto/byCategoria/${categoria_id}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setProducts(data);                   
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/producto/byCategoria/${categoria_id}`);
+                if (response.status === 200) {
+                    const data = response.data;
+                    setProducts(data);
                 } else {
                     setError(`Error: ${response.status}`);
                 }
@@ -35,59 +36,49 @@ const ProductosXCategoria = ({ categoria_id, categoriaDetalle }) => {
                 setError(error.message);
             } finally {
                 setIsLoading(false);
-                
-              }
+            }
         };
 
         fetchProductsByCategory();
     }, [categoria_id]);
 
     if (error) {
-        swal({
-          icon: 'error',
-          title: 'Error',
-          text: error,
-          timer: 3000,
-          buttons: false,
-        });
-        return null;
+        return <p>Error: {error}</p>;
     }
+
     return (
         <ThemeProvider theme={theme}>
             <Box
                 sx={{
                     marginBottom: '8vh',
-                    background: 'rgb(255,255,255)',
-                    background: 'linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(200,201,202,1) 79%, rgba(255,255,255,1) 100%)',
+                    backgroundColor: "#F0F0F0",
                     padding: "0em 3em 2em 3em"
                 }}
                 id='random-detalle'
-                >
+            >
                 {!isLoading ? (
                     <>
-                        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2, marginBottom: 3 }}>
                             <Typography sx={{
                                 width: '100vw',
-                                height:'auto',
+                                height: 'auto',
                                 textAlign: "center",
                                 color: "#16213E",
                                 fontSize: 23,
                                 fontWeight: "bolder"
                             }}>{categoriaDetalle}</Typography>
                         </Box>
-                        <Grid container spacing={2}
-                        
-                        >
+                        <Grid container spacing={2}>
                             {products.map((producto) => (
                                 <Grid item xs={12} sm={6} md={4} lg={2.4} key={producto.id}
-                                sx={{ display:"flex", justifyContent:"center"}}>
+                                    sx={{ display: "flex", justifyContent: "center" }}>
                                     <CardProducto producto={producto} />
                                 </Grid>
                             ))}
                         </Grid>
                     </>
                 ) : (
-                    <Loading containerHeight={"40vh"}/>
+                    <Loading containerHeight={"40vh"} />
                 )}
             </Box>
         </ThemeProvider>

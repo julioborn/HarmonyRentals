@@ -43,8 +43,6 @@ public class SecurityConfig {
                         "/puntuacion/**"
                         )
                 .permitAll()
-                .requestMatchers("/verificar/**")
-                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

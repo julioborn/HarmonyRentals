@@ -1,7 +1,9 @@
 package HarmonyRentals.Models;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+
+import java.util.List;
 
 
 @Getter
@@ -21,27 +23,17 @@ public class ProductoDTO {
     @JsonProperty("descripcion")
     private String descripcion;
 
-    @JsonProperty("imagen")
-    private String imagen;
-
-    @JsonProperty("imagen2")
-    private String imagen2;
-
-    @JsonProperty("imagen3")
-    private String imagen3;
-
-    @JsonProperty("imagen4")
-    private String imagen4;
-
-    @JsonProperty("imagen5")
-    private String imagen5;
 
     @JsonProperty("precio_x_dia")
     private Double precio_x_dia;
 
+    @JsonProperty("imagenes")
+    private List<String> imagenes;
+
     @JsonProperty("categoria_id")
     private Integer categoria_id;
-
+    @JsonProperty("stock")
+    private Integer stock;
     public Integer getCategoria_id() {
         return categoria_id;
     }

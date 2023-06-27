@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Box } from "@mui/material";
 import "../Style/Calendar.css";
+import axios from "axios";
 
 
 const CalendarHome = ({ onDateRangeChange, productoId }) => {
@@ -25,15 +26,14 @@ const CalendarHome = ({ onDateRangeChange, productoId }) => {
     if (productoId) {
       const fetchData = async () => {
         try {
-          const response = await fetch(`http://3.145.94.82:8080/alquiler/producto/${productoId}/fechas`);
-          const data = await response.json();
+          const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/alquiler/producto/${productoId}/fechas`);
+          const data = response.data;
           setReserved(data);
           setIsLoading(false);
         } catch (error) {
           console.log(error);
         }
       };
-
       fetchData();
     }
   }, [productoId]);
@@ -59,6 +59,7 @@ const CalendarHome = ({ onDateRangeChange, productoId }) => {
       }}
     >
       <DatePicker
+      name="datePickerHome"
         className="datePickerHome"
         selectsRange={true}
         startDate={startDate}

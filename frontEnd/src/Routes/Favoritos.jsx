@@ -3,43 +3,55 @@ import { GlobalContext } from "../Context/GlobalContext";
 import { CardProducto } from '../Components/CardProducto';
 import { Box, Button, Typography } from '@mui/material';
 import '../Style/Favoritos.css';
+import Loading from "../Components/Loading";
+import axios from 'axios';
 
 const Favoritos = () => {
     const [favoritos, setFavoritos] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const { state, dispatch } = useContext(GlobalContext);
 
     useEffect(() => {
         const fetchFavoritos = async () => {
             try {
                 const usuarioId = state.auth.id;
-                const response = await fetch(`http://3.145.94.82:8080/favoritos/${usuarioId}`);
-                if (response.ok) {
-                    const favoritosData = await response.json();
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/favoritos/${usuarioId}`);
+                if (response.status === 200) {
+                    const favoritosData = response.data;
                     setFavoritos(favoritosData);
-                } else {}
-            } catch (error) {}
+                    setIsLoading(false);
+                } else {
+                    //console.log('ERROR');
+                }
+            } catch (error) {
+                //console.error('Error:', error);
+            }
         };
         fetchFavoritos();
     }, []);
 
     const handleRemoveAllFavorites = () => {
         const usuarioId = state.auth.id;
-        fetch(`http://3.145.94.82:8080/favoritos/eliminar-favoritos/${usuarioId}`, {
-            method: 'DELETE',
-        })
+        axios.delete(`${import.meta.env.VITE_BACKEND_URL}/favoritos/eliminar-favoritos/${usuarioId}`)
             .then((response) => {
-                if (response.ok) {
+                if (response.status === 200) {
                     dispatch({ type: 'REMOVE_ALL_FAVORITES' });
                     setFavoritos([]);
-                } else {}
+                } else {
+                    //console.log("Error al eliminar");
+                }
             })
-            .catch((error) => {});
+            .catch((error) => {
+                //console.log("Error solicitud eliminar");
+            });
     };
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", paddingBottom: 10, paddingTop: 20 }}>
-            {favoritos.length > 0 ? (
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", paddingBottom: 10, paddingTop: 15, backgroundColor: "#F0F0F0" }}>
+            {isLoading ? (
+                <Loading />
+            ) : favoritos.length > 0 ? (
+                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", alignContent:"center" }}>
                     <Box sx={{ display: "flex", gap: 3, flexWrap: "wrap", justifyContent: "center" }}>
                         {favoritos.map((favorito) => (
                             <CardProducto
@@ -47,7 +59,7 @@ const Favoritos = () => {
                                 producto={{
                                     id: favorito.producto.id,
                                     nombre: favorito.producto.nombre,
-                                    imagen: favorito.producto.imagen
+                                    imagenes: favorito.producto.imagenes
                                 }}
                                 isLoggedIn={state.auth.isLogged}
                             />
@@ -57,7 +69,7 @@ const Favoritos = () => {
                         <Button
                             variant="contained"
                             sx={{
-                                fontSize:"15px",
+                                fontSize: "15px",
                                 textTransform: "none",
                                 backgroundColor: "#16213e",
                                 "&:hover": {
@@ -67,7 +79,7 @@ const Favoritos = () => {
                             }}
                             onClick={handleRemoveAllFavorites}
                         >
-                            Eliminar todos
+                            Eliminar Todos
                         </Button>
                     </Box>
                 </Box>

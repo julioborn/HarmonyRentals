@@ -2,6 +2,7 @@ import { Grid, Box, Pagination, ThemeProvider, createTheme } from "@mui/material
 import { CardProducto } from "./CardProducto";
 import Loading from "./Loading";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const theme = createTheme({
     palette: {
@@ -17,13 +18,15 @@ const ListadoProductos = () => {
     const [productos, setProductos] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+
     useEffect(() => {
         obtenerProductos();
     }, [currentPage]);
+
     const obtenerProductos = async () => {
         try {
-            const response = await fetch(`http://3.145.94.82:8080/producto/paginado?page=${currentPage}&size=10`);
-            const data = await response.json();
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/producto/paginado?page=${currentPage}&size=10`);
+            const data = response.data;
             setProductos(data.content);
             setTotalPages(data.totalPages);
         } catch (error) {

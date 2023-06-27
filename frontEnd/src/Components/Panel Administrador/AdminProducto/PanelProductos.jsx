@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-
   Box,
-
   Typography,
-
   Tabs,
   Tab,
 } from "@mui/material";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ListadoProductosAdmin from "./ListadoProductosAdmin"
-import AgregarProductoForm from "./AgregarProductoForm"
+import ListadoProductosAdmin from "./ListadoProductosAdmin";
+import AgregarProductoForm from "./AgregarProductoForm";
+
 
 const theme = createTheme({
   palette: {
@@ -24,78 +21,62 @@ const theme = createTheme({
   },
 });
 
-
-
 const PanelProductos = () => {
-
   const [activeTab, setActiveTab] = useState(0); // Active tab index
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
+          padding: "20px",
         }}
       >
-        <Typography sx={{ textAlign: "center", fontSize: "30px", pt: "5vh" }}>
+        <Typography
+          sx={{ textAlign: "center", fontSize: "30px", pt: "5vh" }}
+        >
           Productos
         </Typography>
-
+        
         {/* Tabs Component */}
         <Tabs
           value={activeTab}
           onChange={(event, newValue) => setActiveTab(newValue)}
           centered
+          sx={{
+            width: "100%",
+            maxWidth: "500px",
+            marginBottom: "20px",
+          }}
         >
-          <Tab label="Listado" />
-          <Tab label="Agregar" />
-          {/* <Tab label="Filtrar" />*/}
+          <Tab
+            label="Listado"
+            sx={{ textTransform: "none", fontSize: "15px" }}
+          />
+          <Tab
+            label="Agregar"
+            sx={{ textTransform: "none", fontSize: "15px" }}
+          />
         </Tabs>
 
-
-        {activeTab === 0 && (
-          <Box sx={{
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
+            width: "70vw",
           }}
-          >
-            <ListadoProductosAdmin />
-          </Box>
-        )}
-
-
-        {activeTab === 1 && (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <AgregarProductoForm />
-          </Box>
-        )}
-        {/* Content for the selected tab */}
-        {activeTab === 2 && (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography>Productos filtrados</Typography>
-          </Box>
-        )}
-
+        >
+          {/* Content for the selected tab */}
+          {activeTab === 0 && <ListadoProductosAdmin />}
+          {activeTab === 1 && <AgregarProductoForm />}
+        </Box>
       </Box>
-    </>
+    </ThemeProvider>
   );
 };
 

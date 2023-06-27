@@ -2,8 +2,7 @@ package HarmonyRentals.Service;
 
 import HarmonyRentals.Models.Categoria;
 import HarmonyRentals.Models.CategoriaDTO;
-import HarmonyRentals.Models.Producto;
-import HarmonyRentals.Models.ProductoDTO;
+
 import HarmonyRentals.Repository.CategoriaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

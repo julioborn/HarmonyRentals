@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Typography, Tabs, Tab } from "@mui/material";
-
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import AgregarUsuarioForm from "./AgregarUsuarioForm";
 import ListadoUsuariosAdmin from "./ListadoUsuariosAdmin";
 
@@ -22,10 +21,12 @@ const PanelCategorias = () => {
   return (
     <>
       <Box
+        className="produ-box"
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          padding: "20px",
         }}
       >
         <Typography sx={{ textAlign: "center", fontSize: "30px", pt: "5vh" }}>
@@ -38,8 +39,8 @@ const PanelCategorias = () => {
           onChange={(event, newValue) => setActiveTab(newValue)}
           centered
         >
-          <Tab label="Listado" />
-          <Tab label="Agregar" />
+          <Tab label="Listado" sx={{ textTransform: "none", fontSize: "15px" }} />
+          <Tab label="Agregar" sx={{ textTransform: "none", fontSize: "15px" }} />
         </Tabs>
 
         {/* Content for the selected tab */}
@@ -68,7 +69,7 @@ const PanelCategorias = () => {
             <AgregarUsuarioForm />
           </Box>
         )}
-      
+
       </Box>
     </>
   );

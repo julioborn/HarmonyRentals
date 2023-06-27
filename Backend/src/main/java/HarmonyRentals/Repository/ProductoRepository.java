@@ -14,7 +14,7 @@ import java.util.List;
 public interface ProductoRepository extends
         JpaRepository<Producto, Integer> {
 
-    @Query(value = "SELECT * FROM producto WHERE id >= (SELECT FLOOR(MAX(id) * RAND()) FROM producto) ORDER BY id LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT * FROM producto ORDER BY RAND() LIMIT 10", nativeQuery = true)
     List<Producto> getRandomProductos();
 
     Page<Producto> findAll(Pageable pageable)  ;

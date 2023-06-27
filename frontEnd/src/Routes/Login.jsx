@@ -6,62 +6,53 @@ import { GlobalContext } from '../Context/GlobalContext';
 import { useNavigate } from 'react-router-dom';
 import '../Style/Login.css';
 import swal from 'sweetalert';
+import axios from 'axios';
 
 const Login = () => {
   const { state, dispatch } = useContext(GlobalContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (values) => {
-    const request = {
-      email: values.email,
-      password: values.password
-    };
-
-    fetch('http://3.145.94.82:8080/auth/login', {
-      method: 'POST',
+const handleSubmit = async (values) => {
+  const request = {
+    email: values.email,
+    password: values.password
+  };
+  try {
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, request, {
       headers: {
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(request)
-    })
-      .then(response => {                 
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error occurred while fetching data');
-        }
-      })
-      .then(data => {
-        // Handle the response data from the server
-        console.log(data);
-        dispatch({ type: "LOGIN", payload: { email: values.email, token: JSON.stringify(data) } });
-
-        navigate('/');
-        sessionStorage.setItem("token", JSON.stringify(data));
-
-        swal({
-          title: "Sesión Iniciada Correctamente",
-          text: "¡Bienvenido!",
-          icon: "success",
-          timer: 2500,
-          buttons: false
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
-      })
-      .catch(error => {
-        // Handle any errors that occurred during the request
-        console.error(error);
-        swal({
-          title: "Usuario y/o Contraseña incorrectos",
-          text: "Proporciona tus datos correctamente",
-          icon: "error",
-          timer: 3000,
-          buttons: false
-        });
+      }
+    });
+    if (response.status === 200) {
+      const data = response.data;
+     // console.log(data);
+      dispatch({ type: "LOGIN", payload: { email: values.email, token: JSON.stringify(data) } });
+      sessionStorage.setItem("token", JSON.stringify(data));
+      swal({
+        title: "Sesión Iniciada Correctamente",
+        text: "¡Bienvenido!",
+        icon: "success",
+        timer: 2500,
+        buttons: false
       });
-  };
+      setTimeout(() => {
+        navigate('/');
+        window.location.reload();
+      }, 3000);
+    } else {
+      throw new Error('Error occurred while fetching data');
+    }
+  } catch (error) {
+    console.error(error);
+    swal({
+      title: "Usuario y/o Contraseña incorrectos",
+      text: "Proporciona tus datos correctamente",
+      icon: "error",
+      timer: 3000,
+      buttons: false
+    });
+  }
+};
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Correo inválido').required('Ingresá tu correo registrado'),

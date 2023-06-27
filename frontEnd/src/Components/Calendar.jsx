@@ -7,10 +7,9 @@ import DatePiker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../Style/Calendar.css';
 
-const Calendar = ({ fixed, reservedDates }) => {
+const Calendar = ({ fixed, reservedDates, onDateRangeChange }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
   registerLocale('es', es);
 
   const handleStartDateChange = (date) => {
@@ -18,6 +17,7 @@ const Calendar = ({ fixed, reservedDates }) => {
     if (!endDate || date > endDate) {
       setEndDate(null);
     }
+    onDateRangeChange(date, endDate);
   };
 
   const handleEndDateChange = (date) => {
@@ -25,61 +25,64 @@ const Calendar = ({ fixed, reservedDates }) => {
       setStartDate(null);
     }
     setEndDate(date);
+    onDateRangeChange(startDate, date);
   };
-
   const excludeDateIntervals = reservedDates.map(({ fecha_desde, fecha_hasta }) => {
     const start = new Date(fecha_desde);
     const end = new Date(fecha_hasta);
     return { start, end };
   });
   return (
-    <Box>
-      <Card className={fixed ? 'picker' : 'picker'} id='calendarios'
-        sx={{ 
-          // backgroundColor: '#e2e9f5',
-          textAlign: 'center', 
-          height: '18em', 
-          width: '32em', 
-          display: 'flex', 
-          flexDirection: 'row', 
-          alignItems:'center',
-          justifyContent: 'center',
-          mb:7   
-          }}>
-        {true ? (
-          <>
-            <DatePiker
-              selected={startDate}
-              onChange={handleStartDateChange}
-              dateFormat='dd/MM/yyyy'
-              locale='es'
-              excludeDates={reservedDates}
-              excludeDateIntervals={excludeDateIntervals}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-              minDate={new Date()}
-              placeholderText='Fecha Inicial'
-              inline
-            />
-            <DatePiker
-              selected={endDate}
-              onChange={handleEndDateChange}
-              dateFormat='dd/MM/yyyy'
-              locale='es'
-              excludeDates={reservedDates}
-              excludeDateIntervals={excludeDateIntervals}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-              placeholderText='Fecha Final'
-              inline
-            />
-          </>
-        ) : null}
-      </Card>
+
+    <Box className={fixed ? 'picker' : 'picker'} 
+      id='calendarios'
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow:'-0px 5px 1px -5px',
+        borderRadius: '0.5em',
+        mb: 7,
+        textAlign: 'center',
+        height: '18.45em',
+        width: '35em',
+      }}
+      >
+      {true ? (
+        <>
+          <DatePiker
+            selected={startDate}
+            onChange={handleStartDateChange}
+            dateFormat='dd/MM/yyyy'
+            locale='es'
+            excludeDates={reservedDates}
+            excludeDateIntervals={excludeDateIntervals}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            minDate={new Date()}
+            placeholderText='Fecha Inicial'
+            inline
+          />
+          <DatePiker
+            selected={endDate}
+            onChange={handleEndDateChange}
+            dateFormat='dd/MM/yyyy'
+            locale='es'
+            excludeDates={reservedDates}
+            excludeDateIntervals={excludeDateIntervals}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            placeholderText='Fecha Final'
+            inline
+          />
+        </>
+      ) : null}
     </Box>
+
   );
 };
 

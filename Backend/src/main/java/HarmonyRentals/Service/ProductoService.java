@@ -77,13 +77,14 @@ public class ProductoService {
     private void actualizarProducto(Producto productoExistente, ProductoDTO productoDTO) {
         productoExistente.setNombre(productoDTO.getNombre());
         productoExistente.setDescripcion(productoDTO.getDescripcion());
-        productoExistente.setImagen(productoDTO.getImagen());
-        productoExistente.setImagen2(productoDTO.getImagen2());
-        productoExistente.setImagen3(productoDTO.getImagen3());
-        productoExistente.setImagen4(productoDTO.getImagen4());
-        productoExistente.setImagen5(productoDTO.getImagen5());
+        // Add the new imagenes to the existing list
+        List<String> imagenes = productoDTO.getImagenes();
+        if (imagenes != null) {
+            productoExistente.getImagenes().addAll(imagenes);
+        }
         productoExistente.setPrecio_x_dia(productoDTO.getPrecio_x_dia());
         productoExistente.setCategoria_id(productoDTO.getCategoria_id());
+        productoExistente.setStock(productoDTO.getStock());
     }
 
     public List<Producto> buscaProductos(String query) {

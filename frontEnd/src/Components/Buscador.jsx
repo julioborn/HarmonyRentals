@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Autocomplete } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import Calendar from './Calendar';
 import '../Style/Buscador.css';
+import axios from 'axios';
 
 const CustomTextField = React.forwardRef(({ InputProps, ...props }, ref) => (
   <TextField
@@ -21,8 +21,8 @@ const Buscador = () => {
 
   const performSearch = async (value) => {
     try {
-      const response = await fetch(`http://3.145.94.82:8080/producto/busca?query=${value}`);
-      const data = await response.json();
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/producto/busca?query=${value}`);
+      const data = response.data;
       console.log('API Response:', data);
       return data || [];
     } catch (error) {
@@ -69,6 +69,7 @@ const Buscador = () => {
         )}
       />
       <Box className="date">
+        {/* <Calendar fixed={false} /> */}
         <Button className="btnBuscar" type="submit">
           <SearchIcon />
         </Button>

@@ -4,68 +4,53 @@ import {
   Paper,
   Box,
   Button,
-  FormControl,
-  FormHelperText,
-  InputLabel,
   TextField,
   Typography,
-  CardMedia,
-  IconButton,
-  Select,
-  MenuItem,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Loading from "../../Loading";
+import axios from "axios";
 
 const validationSchema = Yup.object({
   nombre: Yup.string().required("El nombre es requerido"),
   descripcion: Yup.string().required("La descripción es requerida"),
   imagen: Yup.string(),
-  
+
 });
 
 const ModificarCategoriaForm = ({ categoriaId }) => {
   const [categoria, setCategoria] = useState(null);
   const [error, setError] = useState(null);
   const [isEditingComplete, setIsEditingComplete] = useState(false);
-  
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
     const fetchCategoria = async () => {
       try {
-        const response = await fetch(
-          `http://3.145.94.82:8080/categoria/${categoriaId}`
-        );
-        const data = await response.json();
-        setCategoria(data);       
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/categoria/${categoriaId}`);
+        const data = response.data;
+        setCategoria(data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
     };
-
     fetchCategoria();
   }, [categoriaId]);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const { ...otherValues } = values;
     try {
-      const response = await fetch(
-        `http://3.145.94.82:8080/categoria/modificar/${categoriaId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...otherValues           
-          }),
-        }
-      );
-      const responseData = await response.json();
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/categoria/modificar/${categoriaId}`, {
+        ...otherValues
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const responseData = response.data;
       if (!response.ok) {
         throw new Error(responseData.message || "An error occurred.");
       }
@@ -95,43 +80,43 @@ const ModificarCategoriaForm = ({ categoriaId }) => {
 
   if (isEditingComplete) {
     return (
-      <Grid container spacing={2} sx={{ marginTop: "3vh" , display:"flex", justifyContent:"center"}}>
-         
-      <Paper elevation={3} sx={{ p: 2 , display:"flex", justifyContent:"center", alignItems:"center"}}>
-      <Grid item xs={6} >
-        <Typography variant="h6">Categoria modificada</Typography>
-        <Typography variant="body1">Nombre: {categoria.nombre}</Typography>
-        <Typography variant="body1">
-          Descripción: {categoria.descripcion}
-        </Typography>
-      
-        </Grid>
-        <Grid item xs={6}>
-              <Box  sx={{display:"flex",alignItems:"center", justifyContent:"center"}}>
-                {/* Image Display */}
-                {categoria.imagen && (
-                  <img
-                    src={categoria.imagen}
-                    alt="Imagen de la categoria"
-                    style={{ width: "auto", height: "200px", marginBottom: "1rem" }}
-                  />
-                )}
+      <Grid container spacing={2} sx={{ marginTop: "3vh", display: "flex", justifyContent: "center" }}>
 
-                {/* Additional Pictures Frames */}
-                <Grid container spacing={1}>
-                  {images.slice(0, 4).map((image, index) => (
-                    <Grid item key={index} xs={3}>
-                      <img
-                        src={URL.createObjectURL(image)}
-                        alt={`Imagenes Categoria ${index + 1}`}
-                        style={{  height: "100px",width: "auto" }}
-                      />
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            </Grid>
-      </Paper>
+        <Paper elevation={3} sx={{ p: 2, display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Grid item xs={6} >
+            <Typography variant="h6">Categoría modificada</Typography>
+            <Typography variant="body1">Nombre: {categoria.nombre}</Typography>
+            <Typography variant="body1">
+              Descripción: {categoria.descripcion}
+            </Typography>
+
+          </Grid>
+          <Grid item xs={6}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {/* Image Display */}
+              {categoria.imagen && (
+                <img
+                  src={categoria.imagen}
+                  alt="Imagen de la categoria"
+                  style={{ width: "auto", height: "200px", marginBottom: "1rem" }}
+                />
+              )}
+
+              {/* Additional Pictures Frames */}
+              <Grid container spacing={1}>
+                {images.slice(0, 4).map((image, index) => (
+                  <Grid item key={index} xs={3}>
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt={`Imagenes Categoria ${index + 1}`}
+                      style={{ height: "100px", width: "auto" }}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </Grid>
+        </Paper>
       </Grid>
     );
   }
@@ -141,7 +126,7 @@ const ModificarCategoriaForm = ({ categoriaId }) => {
       initialValues={{
         nombre: categoria.nombre || "",
         descripcion: categoria.descripcion || "",
-        imagen: categoria.imagen || ""       
+        imagen: categoria.imagen || ""
       }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
@@ -149,6 +134,13 @@ const ModificarCategoriaForm = ({ categoriaId }) => {
       {(formikProps) => (
         <Form>
           <Paper elevation={3} sx={{ p: 4, pt: 0 }}>
+            {/*
+            <Box display="flex" justifyContent="flex-end">
+              <IconButton onClick={handleClose} sx={{  }}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            */}
             <Box
               display="flex"
               flexDirection="column"
@@ -157,18 +149,19 @@ const ModificarCategoriaForm = ({ categoriaId }) => {
               height="100%"
             >
               <Typography variant="h5" sx={{ mt: 3 }}>
-                Modificar categoria
+                Modificar Categoría
               </Typography>
-              <Grid container spacing={2} sx={{ marginTop: "3vh" }}>
-                <Grid item xs={6}>
+              <Grid sx={{ marginTop: "3vh", display:"flex", flexDirection:"column"  }}>
+                <Grid>
                   <Field
+                    size="small"
                     name="nombre"
                     as={TextField}
                     label="Nombre"
                     fullWidth
                     sx={{ marginBottom: "3vh" }}
-                  />                  
-                   <Field
+                  />
+                  <Field
                     name="descripcion"
                     as={TextField}
                     multiline
@@ -179,9 +172,10 @@ const ModificarCategoriaForm = ({ categoriaId }) => {
                     sx={{ marginBottom: "3vh" }}
                   />
                 </Grid>
-                <Grid item xs={6}>
-                 
+                <Grid>
+
                   <Field
+                    size="small"
                     name="imagen"
                     as={TextField}
                     label="Imagen"
@@ -218,6 +212,7 @@ const ModificarCategoriaForm = ({ categoriaId }) => {
                   color="primary"
                   type="submit"
                   disabled={formikProps.isSubmitting}
+                  sx={{textTransform:"none"}}
                 >
                   Guardar cambios
                 </Button>

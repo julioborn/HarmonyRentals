@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../Context/GlobalContext";
 import {
     Grid,
     Paper,
@@ -11,9 +12,12 @@ import {
     Typography,
     Select,
     MenuItem,
+    Card,
 } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+
 
 const validationSchema = Yup.object({
     email: Yup.string().email("Formato de email inválido").required("El email es requerido"),
@@ -24,7 +28,6 @@ const validationSchema = Yup.object({
     direccion: Yup.string().required("La dirección es requerida"),
 
 });
-
 const initialValues = {
     email: "",
     usuario: "",
@@ -33,13 +36,47 @@ const initialValues = {
     phone: "",
     direccion: "",
 };
+
 const MisDatos = () => {
     const [usuario, setUsuario] = useState(null);
     const [error, setError] = useState(null);
 
-    const handleSubmit = async (values, { setSubmitting, resetForm }) => {};
+    const { state, dispach } = useContext(GlobalContext);
+    const nombreUsuario = state.auth.nombre;
+    const apellidoUsuario = state.auth.apellido;
+    const Usuario = state.auth.usuario;
+
+    const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/usuario/agregar`, values, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const responseData = response.data;
+            if (!response.ok) {
+                throw new Error(responseData.message || "An error occurred.");
+            }
+            setUsuario(responseData);
+            setError(null);
+            resetForm();
+        } catch (error) {
+            setError(error.message || "An error occurred. Please try again.");
+            console.error(error);
+        } finally {
+            setSubmitting(false);
+            swal({
+                title: "Agregado",
+                text: "Usuario agregado correctamente",
+                icon: "success",
+                timer: 3000,
+                buttons: false,
+            });
+        }
+    };
+
     return (
-        <Box sx={{ mt: "10vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Box sx={{ mt: 12, mb: 8, display: "flex", justifyContent: "center", alignItems: "center" }}>
             <Grid container spacing={4} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center" }}>
                 <Grid item xs={12} sm={6}>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -48,21 +85,18 @@ const MisDatos = () => {
                                 <Paper sx={{ padding: "5vh" }}>
                                     <Typography variant="h5" sx={{ mb: 2, textAlign: 'center' }}>Mis Datos</Typography>
                                     <Typography variant="h6" sx={{ mb: 1 }}>Datos de cuenta</Typography>
-                                    <Grid item xs={12} sm={12}>
-                                        <InputLabel htmlFor="email">E-mail</InputLabel>
-                                        <FormControl fullWidth sx={{ mb: 1 }}>
-                                            <Field as={TextField} id="email" name="email" size="small" error={errors.email && touched.email} />
-                                            {errors.email && touched.email && <FormHelperText>{errors.email}</FormHelperText>}
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} sm={12}>
-                                        <InputLabel htmlFor="usuario">Usuario</InputLabel>
-                                        <FormControl fullWidth sx={{ mb: 1 }}>
-                                            <Field as={TextField} id="usuario" name="usuario" size="small" error={errors.usuario && touched.usuario} />
-                                            {errors.usuario && touched.usuario && <FormHelperText>{errors.usuario}</FormHelperText>}
-                                        </FormControl>
-                                    </Grid>
-
+                                    <Box sx={{ display: 'flex', gap: '5em', mb: 1, height: '2.5em', width: '100%', boxShadow: '0px 0px 2px -1px' }}>
+                                        <Typography sx={{ display: 'flex', alignItems: 'center', color: '#838383 ', ml: '10px', width: ' 15%' }} >Nombre:  </Typography>
+                                        <Typography sx={{ display: 'flex', alignItems: 'center', fontSize: '17.5px' }}>{nombreUsuario}</Typography>
+                                    </Box>
+                                    <Box sx={{ display: 'flex', gap: '5em', mb: 1, height: '2.5em', width: '100%', boxShadow: '0px 0px 2px -1px' }}>
+                                        <Typography sx={{ display: 'flex', alignItems: 'center', color: '#838383 ', ml: '10px', width: ' 15%' }} >Apellido:  </Typography>
+                                        <Typography sx={{ display: 'flex', alignItems: 'center', fontSize: '17.5px' }}>{apellidoUsuario}</Typography>
+                                    </Box>
+                                    <Box sx={{ display: 'flex', gap: '5em', mb: 3, height: '2.5em', width: '100%', boxShadow: '0px 0px 2px -1px' }}>
+                                        <Typography sx={{ display: 'flex', alignItems: 'center', color: '#838383 ', ml: '10px', width: ' 15%' }} >Email:   </Typography>
+                                        <Typography sx={{ display: 'flex', alignItems: 'center', fontSize: '17.5px' }}>{Usuario}</Typography>
+                                    </Box>
                                     <Typography variant="h6" sx={{ mb: 1, mt: 5 }}>Datos Personales</Typography>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} sm={12}>
@@ -80,22 +114,31 @@ const MisDatos = () => {
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={12} sm={12}>
-                                            <InputLabel htmlFor="phone">Teléfono</InputLabel>
-                                            <FormControl fullWidth sx={{ mb: 1 }}>
-                                                <Field as={TextField} id="phone" name="phone" type="phone" size="small" error={errors.telefono && touched.telefono} />
-                                                {errors.telefono && touched.telefono && <FormHelperText>{errors.telefonoo}</FormHelperText>}
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={12} sm={12}>
                                             <InputLabel htmlFor="direccion">Dirección</InputLabel>
                                             <FormControl fullWidth sx={{ mb: 1 }}>
                                                 <Field as={TextField} id="direccion" name="direccion" size="small" error={errors.direccion && touched.direccion} />
                                                 {errors.direccion && touched.direccion && <FormHelperText>{errors.direccion}</FormHelperText>}
                                             </FormControl>
                                         </Grid>
+                                        <Grid item xs={12} sm={12}>
+                                            <InputLabel htmlFor="phone">Teléfono</InputLabel>
+                                            <FormControl fullWidth sx={{ mb: 1 }}>
+                                                <Field as={TextField} id="phone" name="phone" type="phone" size="small" error={errors.telefono && touched.telefono} />
+                                                {errors.telefono && touched.telefono && <FormHelperText>{errors.telefonoo}</FormHelperText>}
+                                            </FormControl>
+                                        </Grid>
                                     </Grid>
                                     <Box sx={{ display: "flex", justifyContent: "center" }}>
-                                        <Button variant="contained" color="primary" type="submit" sx={{ marginTop: 3, textTransform: "none" }}>
+                                        <Button variant="contained" color="primary" type="submit"
+                                            sx={{
+                                                fontSize: "15px",
+                                                textTransform: "none",
+                                                backgroundColor: "#16213e",
+                                                "&:hover": {
+                                                    backgroundColor: "#283047"
+                                                },
+                                                width: 280
+                                            }}>
                                             Agregar
                                         </Button>
                                     </Box>

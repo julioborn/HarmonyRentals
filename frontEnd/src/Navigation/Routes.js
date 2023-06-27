@@ -7,6 +7,7 @@ import Login from "../Routes/Login";
 import Register from "../Routes/Register";
 import Favoritos from "../Routes/Favoritos";
 import MisDatos from "../Components/MisDatos";
+import Reservas from "../Routes/Reservas";
 
 
 export const Rutas = [
@@ -52,6 +53,11 @@ export const Rutas = [
         id: 8,
         path: '/misDatos',
         Component: MisDatos,
+    },
+    {
+        id: 9,
+        path: '/reservas',
+        Component: Reservas,
     }
 ];
 

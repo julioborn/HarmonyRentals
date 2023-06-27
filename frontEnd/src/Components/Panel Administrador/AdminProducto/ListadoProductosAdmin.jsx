@@ -3,24 +3,20 @@ import {
   Grid,
   Box,
   Pagination,
-  Typography,
   List,
   ListItem,
   ListItemText,
-  ListItemSecondaryAction,
   IconButton,
   Divider,
-  Collapse,
-  Tabs,
-  Tab,
+  Collapse
 } from "@mui/material";
 import Loading from "../../Loading";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import NewModificarProductoForm from "./NewModificarProductoForm";
-import AgregarProductoForm from "./AgregarProductoForm";
+import { useMediaQuery } from "@mui/material";
+import axios from "axios";
 
 const theme = createTheme({
   palette: {
@@ -33,7 +29,7 @@ const theme = createTheme({
   },
 });
 
-const endpoint = "http://3.145.94.82:8080/producto/todos";
+const endpoint = `${import.meta.env.VITE_BACKEND_URL}/producto/todos`;
 
 const ListadoProductosAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,11 +38,12 @@ const ListadoProductosAdmin = () => {
   const productsPerPage = 10;
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const fetchData = async () => {
     try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
+      const response = await axios.get(endpoint);
+      const data = response.data;
       setProductos(data);
       setTotalPages(Math.ceil(data.length / productsPerPage));
       setLoading(false);
@@ -65,13 +62,12 @@ const ListadoProductosAdmin = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(
-        `http://3.145.94.82:8080/producto/eliminar/${id}`,
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/producto/eliminar/${id}`,
         {
           method: "DELETE",
         }
       );
-
       if (response.status === 200) {
         swal({
           title: "Eliminado",
@@ -117,12 +113,13 @@ const ListadoProductosAdmin = () => {
   return (
     <>
       <Box
+        className="box-modificar"
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           width: "100%",
-          mb:"5vh",
+          mb: "5vh",
         }}
       >
         <Box
@@ -137,10 +134,15 @@ const ListadoProductosAdmin = () => {
             {currentProducts.map((product, index) => (
               <Box key={product.id}>
                 <ListItem>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={2} >
                     <Grid
+                      className={`img-productos-admin ${
+                        isMobile ? "mobile-image" : ""
+                      }`}
                       item
-                      xs={2}
+                      xs={12}
+                      sm={2} 
+                      md={2}
                       sx={{
                         display: "flex",
                         justifyContent: "center",
@@ -150,42 +152,46 @@ const ListadoProductosAdmin = () => {
                       <img
                         src={product.imagen}
                         alt="Product Image"
-                        style={{ maxHeight: "100px", width:"auto" }}
+                        style={{ maxHeight: isMobile ? "90px" : "100px", width: "auto" }}
                       />
                     </Grid>
-                    <Grid item xs={8}
-                    sx={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+
+                    <Grid item xs={12} sm={8} md={8} sx={{  display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: "center", justifyContent: "center" }}>
                       <ListItemText
+                      sx={{pl:"10px",}}
                         primary={product.nombre}
                         secondary={product.descripcion}
                       />
                     </Grid>
-                    <Grid item xs={2}
-                    sx={{display:"flex", alignItems:"center", justifyContent:"space-evenly"}}
-                    >
-                    
-                        <IconButton
-                          aria-label="Edit"
-                          onClick={() => handleEdit(product.id)}
-                          color="primary"
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          aria-label="Delete"
-                          onClick={() => handleDelete(product.id)}
-                          sx={{color:"#CC0000"}}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      
+
+                    <Grid className="botones-editeliminar" item xs={12} sm={2}  md={2}sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
+                      <IconButton
+                        aria-label="Edit"
+                        onClick={() => handleEdit(product.id)}
+                        color="primary"
+                        sx={{'&:hover': {
+                          backgroundColor: 'transparent',
+                        }}}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label="Delete"
+                        onClick={() => handleDelete(product.id)}
+                        sx={{ color: "#CC0000", '&:hover': {
+                          backgroundColor: 'transparent',
+                        } }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
                     </Grid>
+                    
                   </Grid>
                 </ListItem>
                 {expandedItem === product.id && (
                   <Collapse in={true} timeout="auto" unmountOnExit>
                     <Box sx={{ p: 2 }}>
-                      <NewModificarProductoForm productoId={product.id} />
+                      <NewModificarProductoForm producto={product} />
                     </Box>
                   </Collapse>
                 )}
@@ -198,7 +204,7 @@ const ListadoProductosAdmin = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <Box sx={{ display: "flex", justifyContent: "center" , mt:"2vh"}}>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: "2vh" }}>
             <Pagination
               count={totalPages}
               page={currentPage}

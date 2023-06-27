@@ -3,7 +3,6 @@ import "../Style/Categoria.css";
 import { Box, Link } from "@mui/material";
 import ProductosXCategoria from "./ProductosXCategoria";
 import Random10 from "./Random10";
-import Loading from "./Loading";
 import { useMediaQuery } from 'react-responsive'
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';

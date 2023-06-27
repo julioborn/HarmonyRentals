@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Grid,
   Paper,
@@ -10,22 +10,20 @@ import {
   TextField,
   Typography,
   CardMedia,
-  IconButton,
-  Select,
-  MenuItem,
+  IconButton
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import swal from "sweetalert";
+import axios from "axios";
 
 const validationSchema = Yup.object({
   nombre: Yup.string().required("El nombre es requerido"),
   descripcion: Yup.string().required("La descripción es requerida"),
   imagen: Yup.string(),
 });
-
 const initialValues = {
   nombre: "",
   descripcion: "",
@@ -38,20 +36,15 @@ const AgregarCategoriaForm = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await fetch("http://3.145.94.82:8080/categoria/agregar", {
-        method: "POST",
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/categoria/agregar`, values, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
       });
-
-      const responseData = await response.json();
-
+      const responseData = response.data;
       if (!response.ok) {
         throw new Error(responseData.message || "An error occurred.");
       }
-
       setCategoria(responseData);
       setError(null);
       resetForm();
@@ -69,6 +62,7 @@ const AgregarCategoriaForm = () => {
       })
     }
   };
+  
   const handleClose = () => {
     setProducto(null);
   };
@@ -102,7 +96,7 @@ const AgregarCategoriaForm = () => {
               <Form>
                 <Paper sx={{ padding: "5vh" }}>
                   <Typography variant="h5" sx={{ mb: 1 }}>
-                    Agregar Categoria
+                    Agregar Categoría
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={12}>
@@ -158,7 +152,7 @@ const AgregarCategoriaForm = () => {
                     }}
                   >
                     <Button variant="contained" color="primary" type="submit" sx={{ marginTop: 2, textTransform:"none" }}>
-                      Agregar Categoria
+                      Agregar Categoría
                     </Button>
                   </Box>
                   {categoria && categoria.id && (
@@ -169,10 +163,10 @@ const AgregarCategoriaForm = () => {
                         </IconButton>
                       </Box>
                       <Typography variant="body1">
-                        Categoria agregada:
+                        Categoría agregada:
                       </Typography>
                       <Typography variant="body2">
-                        Id de Categoria: {categoria.id}
+                        Id de Categoría: {categoria.id}
                       </Typography>
                       <Typography variant="body2">
                         Nombre: {categoria.nombre}

@@ -1,5 +1,6 @@
 package HarmonyRentals.Service;
 
+import HarmonyRentals.Exceptions.RentalDateConflictException;
 import HarmonyRentals.Models.*;
 import HarmonyRentals.Repository.AlquilerRepository;
 import HarmonyRentals.Repository.ProductoRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,25 +49,35 @@ public class AlquilerService {
         Optional<Producto> productoOptional = productoRepository.findById(alquilerDTO.getProducto_id());
 
         if (usuarioOptional.isEmpty()) {
-            throw new UsuarioNotFoundException("Usuario not found");
+            throw new UsuarioNotFoundException("Usuario no encontrado");
         }
 
         if (productoOptional.isEmpty()) {
-            throw new ProductoNotFoundException("Producto not found");
+            throw new ProductoNotFoundException("Producto no encontrado");
         }
-
         Usuario usuario = usuarioOptional.get();
         Producto producto = productoOptional.get();
-
+        // Retrieve existing rentals for the product
+        List<Alquiler> existingRentals = alquilerRepository.findAlquilerByProductId(alquilerDTO.getProducto_id());
+        // Check for conflicts with existing rentals
+        for (Alquiler existingRental : existingRentals) {
+            LocalDate existingFechaDesde = existingRental.getFecha_desde().toLocalDate();
+            LocalDate existingFechaHasta = existingRental.getFecha_hasta().toLocalDate();
+            LocalDate newFechaDesde = alquilerDTO.getFecha_desde().toLocalDate();
+            LocalDate newFechaHasta = alquilerDTO.getFecha_hasta().toLocalDate();
+            if (existingFechaDesde.isBefore(newFechaHasta) && existingFechaHasta.isAfter(newFechaDesde)) {
+                throw new RentalDateConflictException("El período seleccionado contiene fechas no disponbles");
+            }
+        }
         Alquiler alquiler = new Alquiler();
         alquiler.setUsuario(usuario);
         alquiler.setProducto(producto);
         alquiler.setFecha_desde(alquilerDTO.getFecha_desde());
         alquiler.setFecha_hasta(alquilerDTO.getFecha_hasta());
         alquiler.setValor(alquilerDTO.getValor());
-
         return alquilerRepository.save(alquiler);
     }
+
 
     public void deleteById(Integer id) {
         Optional<Alquiler> alquilerOptional = alquilerRepository.findById(id);

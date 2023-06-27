@@ -3,23 +3,20 @@ import {
   Grid,
   Box,
   Pagination,
-  Typography,
   List,
   ListItem,
   ListItemText,
-  ListItemSecondaryAction,
   IconButton,
   Divider,
-  Collapse,
-  Tabs,
-  Tab,
+  Collapse
 } from "@mui/material";
 import Loading from "../../Loading";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ModificarUsuarioForm from "./ModificarUsuarioForm"
+import ModificarUsuarioForm from "./ModificarUsuarioForm";
 import swal from "sweetalert";
+import axios from "axios";
 
 const theme = createTheme({
   palette: {
@@ -32,8 +29,6 @@ const theme = createTheme({
   },
 });
 
-
-
 const ListadoUsuariosAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usuarios, setUsuarios] = useState([]);
@@ -42,11 +37,10 @@ const ListadoUsuariosAdmin = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
-
   const fetchData = async () => {
     try {
-      const response = await fetch("http://3.145.94.82:8080/usuario/todos");
-      const data = await response.json();
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/usuario/todos`);
+      const data = response.data;
       setUsuarios(data);
       setTotalPages(Math.ceil(data.length / itemsPerPage));
       setLoading(false);
@@ -65,21 +59,20 @@ const ListadoUsuariosAdmin = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(
-        `http://3.145.94.82:8080/usuario/eliminar/${id}`,
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/usuario/eliminar/${id}`,
         {
           method: "DELETE",
         }
       );
-
       if (response.status === 200) {
         swal({
           title: "Eliminado",
           text: "Usuario eliminado correctamente",
           icon: "success",
           timer: 3000,
-          buttons: false
-        })
+          buttons: false,
+        });
         setUsuarios((prevItems) =>
           prevItems.filter((usuario) => usuario.id !== id)
         );
@@ -105,10 +98,7 @@ const ListadoUsuariosAdmin = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = usuarios.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentItems = usuarios.slice(indexOfFirstItem, indexOfLastItem);
 
   if (loading) {
     return <Loading containerHeight={"50vh"} />;
@@ -123,7 +113,8 @@ const ListadoUsuariosAdmin = () => {
           justifyContent: "center",
           width: "100%",
           mb: "5vh",
-        }}>
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -134,49 +125,76 @@ const ListadoUsuariosAdmin = () => {
         >
           <List sx={{ width: "100%" }}>
             {currentItems.map((usuario, index) => (
-              <Box
-                key={usuario.id}>
-                <ListItem >
+              <Box key={usuario.id}>
+                <ListItem>
                   <Grid container spacing={2} sx={{ margin: 0, padding: 0 }}>
-                    <Grid item xs={2} >
-                      <ListItemText
-                        primary={"id " + usuario.id}
-                      />
+                    <Grid item xs={12} sm={2}>
+                      <ListItemText primary={"ID: " + usuario.id} />
                     </Grid>
-                    <Grid item xs={3} >
+                    <Grid item xs={12} sm={3}>
                       <ListItemText
                         primary={usuario.nombre + " " + usuario.apellido}
-                        secondary={"id: " + usuario.id + " " + usuario.rol.nombre}
+                        secondary={"Rol: " + usuario.rol.nombre}
                       />
                     </Grid>
-                    <Grid item xs={3}>
-                      <ListItemText sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-                        primary={usuario.email}
-                      />
+                    <Grid item xs={12} sm={1.5}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <ListItemText primary={usuario.email} />
+                      </Box>
                     </Grid>
-                    <Grid item xs={4}
-                      sx={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}
-                    >
-                      <IconButton
-                        aria-label="Edit"
-                        onClick={() => handleEdit(usuario.id)}
-                        color="primary"
+                    <Grid item xs={12} sm={3}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "flex-end",
+
+                        }}
                       >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        aria-label="Delete"
-                        onClick={() => handleDelete(usuario.id)}
-                        sx={{color:"#CC0000"}}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                        <IconButton
+                          aria-label="Edit"
+                          onClick={() => handleEdit(usuario.id)}
+                          color="primary"
+                          sx={{
+                            '&:hover': {
+                              backgroundColor: 'transparent',
+                            }
+                          }}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton
+                          aria-label="Delete"
+                          onClick={() => handleDelete(usuario.id)}
+                          sx={{
+                            color: "#CC0000", '&:hover': {
+                              backgroundColor: 'transparent',
+                            }
+                          }
+                          }
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Box>
                     </Grid>
                   </Grid>
                 </ListItem>
                 {expandedItem === usuario.id && (
                   <Collapse in={true} timeout="auto" unmountOnExit>
-                    <Box sx={{ p: 2, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <ModificarUsuarioForm usuarioId={usuario.id} />
                     </Box>
                   </Collapse>

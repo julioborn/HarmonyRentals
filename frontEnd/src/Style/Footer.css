@@ -8,7 +8,7 @@
 }
 
 .botonNav {
-    height: 90px;
+    height: 59px;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -21,7 +21,7 @@
 
 .boxFoot1 {
     align-items: center;
-    background: linear-gradient(90deg, #16213E 0%, #16213E 85%, #e94560 100%);
+    background: #16213E;
     box-shadow: 1px 1px 5px 2px #5c5a5a;
     width: 100vw;
     display: flex;
@@ -30,8 +30,12 @@
 }
 
 .texto {
-    color: #ffffff;
+    color: #ffffffb7;
     width: 50vh;
+    font-size: 13px !important;
+    display: flex;
+    align-items: flex-end;
+    height: 25px;
 }
 
 .social {
@@ -65,6 +69,18 @@
     .boxFoot1 {
         background: #16213e;
         margin-bottom: 25px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .botonNav {
+        height: 80px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        display: flex;
         flex-direction: column;
         align-items: center;
     }

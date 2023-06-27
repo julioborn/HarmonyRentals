@@ -6,9 +6,11 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 import static HarmonyRentals.HarmonyRentalsApp.endpoint;
@@ -18,12 +20,11 @@ import static HarmonyRentals.HarmonyRentalsApp.endpoint;
 public class UploadFileController {
     @Autowired
     private AwsS3Repository awsS3Repository;
-    @CrossOrigin(origins =  endpoint)
-    @PostMapping(value = "/upload")
-    public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) {
-        String response = awsS3Repository.uploadFile(file);
-        //String response = "El archivo "+file.getOriginalFilename()+" fue cargado correctamente a S3";
-        return new ResponseEntity<String>(response, HttpStatus.OK);
+    @CrossOrigin(origins = endpoint)
+    @PostMapping(value = "/upload", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> uploadFile(@RequestPart(value = "file") MultipartFile file) {
+        String imageUrl = awsS3Repository.uploadFile(file);
+        return ResponseEntity.ok().body("{\"url\":\"" + imageUrl + "\"}");
     }
     @CrossOrigin(origins =  endpoint)
     @GetMapping(value = "/list")

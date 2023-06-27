@@ -45,7 +45,7 @@ public class AlquilerController {
         return alquilerService.findFechasReservadasById(producto_id);
     }
     @CrossOrigin(origins = endpoint)
-    @PostMapping
+    @PostMapping ("/agregar")
     @ResponseStatus(HttpStatus.CREATED)
     public Alquiler agregarAlquiler(@RequestBody AlquilerDTO alquilerDTO) {
         return alquilerService.agregarAlquiler(alquilerDTO);

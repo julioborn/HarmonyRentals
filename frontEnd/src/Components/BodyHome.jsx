@@ -16,9 +16,10 @@ import Random10 from "./Random10";
 import ProductosXCategoria from "./ProductosXCategoria";
 import ResultadosBusqueda from "./ResultadosBusqueda";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import swal from "sweetalert";
+
 import CalendarHome from "./CalendarHome";
 import PasosDeBusqueda from "./PasosDeBusqueda";
+import axios from "axios";
 
 //array de categorias
 const categories = [
@@ -60,6 +61,7 @@ const CustomTextField = React.forwardRef(({ InputProps, ...props }, ref) => (
     {...props}
     InputProps={{
       ...InputProps,
+      //endAdornment: null,
       sx: {
         "&.Mui-focused fieldset": {
           borderColor: "black !important",
@@ -100,10 +102,10 @@ const BodyHome = () => {
   //API request buscador de intrumento o de cadena de texto ingresada x el usuario, sin fechas
   const buscarInstrumento = async (value) => {
     try {
-      const response = await fetch(
-        `http://3.145.94.82:8080/producto/busca?query=${value}`
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/producto/busca?query=${value}`
       );
-      const data = await response.json();
+      const data = response.data;
       // console.log("buscar instrumento:", data);
 
       return data || [];
@@ -131,10 +133,11 @@ const BodyHome = () => {
     const formattedFechaDesde = fecha_desde ? formatDate(fecha_desde) : "";
     const formattedFechaHasta = fecha_hasta ? formatDate(fecha_hasta) : "";
     // console.log(formattedFechaDesde, formattedFechaHasta);
-    const response = await fetch(
-      `http://3.145.94.82:8080/alquiler/productosDisponiblesXfecha?query=${query}&fecha_desde=${formattedFechaDesde}&fecha_hasta=${formattedFechaHasta}`
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/alquiler/productosDisponiblesXfecha?query=${query}&fecha_desde=${formattedFechaDesde}&fecha_hasta=${formattedFechaHasta}`
     );
-    const data = await response.json();
+    const data = response.data;
+    // console.log("busqueda productoFechas:", data);
     return data || [];
   };
 

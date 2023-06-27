@@ -9,9 +9,7 @@
 .datePickerHome:hover{
     border-color: black;
   }
-.datePickerHome::placeholder {   
-    
-    
+.datePickerHome::placeholder {
     font-size: 16px;
     color:rgb(163, 162, 162)
   }

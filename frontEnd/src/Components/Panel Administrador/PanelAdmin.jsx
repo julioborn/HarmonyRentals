@@ -1,6 +1,6 @@
 import PanelProductos from "../Panel Administrador/AdminProducto/PanelProductos";
 import PanelCategorias from "../Panel Administrador/AdminCategoria/PanelCategorias";
-import PanelUsuarios from "../Panel Administrador/AdminUsuario/PanelUsuarios"
+import PanelUsuarios from "../Panel Administrador/AdminUsuario/PanelUsuarios";
 import { GlobalContext } from '../../Context/GlobalContext';
 import React, { useState, useContext } from "react";
 import {
@@ -11,9 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import "../Panel Administrador/PanelAdmin.css"
+import CategoryIcon from '@mui/icons-material/Category';
+import GroupIcon from '@mui/icons-material/Group';
+import PianoIcon from '@mui/icons-material/Piano';
 
 const PanelAdmin = ({ adminUser }) => {
-  const [verComponente, setVerComponente] = useState(null);
+  const [verComponente, setVerComponente] = useState("productos");
 
   const { state, dispatch } = useContext(GlobalContext);
   const isAdmin = state.auth.isAdmin;
@@ -58,127 +62,114 @@ const PanelAdmin = ({ adminUser }) => {
           className="paneladmin"
           item
           sx={{
-            width: "18vw",
             backgroundColor: "#EBE8E8",
             position: "fixed",
             top: 0,
             left: 0,
-            bottom: 0,
             overflowY: "auto",
             zIndex: 2,
-            transition: "width 0.3s", 
           }}
         >
+
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              alignItems: "center",
               textAlign: "center",
               width: "auto",
               height: "100vh",
-              backgroundColor: "#DCDCDC"
+              backgroundColor: "#16213e",
             }}
           >
-            <Typography variant="h5" color="primary" mb={3}>
+
+            <Typography
+              className="panel-title"
+              variant="h5"
+              sx={{ color: "#E0E0E0", width: "250px" }}
+              mb={3}
+            >
               Panel de Administración
             </Typography>
-            <Link style={{ textDecoration: "none", marginBottom: "4vh" }}>
+
+            <Link onClick={handleVerProductos} style={{ textDecoration: "none", marginBottom: "4vh" }}>
               <Typography
+                id="typos"
+                className={`panel-link ${verComponente === "productos" ? "selected" : ""}`}
                 variant="button"
-                onClick={handleVerProductos}
                 sx={{
                   padding: 1,
-                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
                   textTransform: "none",
                   fontSize: "16px",
-                  backgroundColor: "white",
-                  color: "#16213E",
-                  borderRadius: 1
+                  color: "#E0E0E0",
+                  borderRadius: 1,
                 }}
               >
                 Productos
               </Typography>
+              <PianoIcon className={`icons ${verComponente === "productos" ? "icons-selected" : ""}`} sx={{ color: "white" }} />
             </Link>
-            <Link style={{ textDecoration: "none", marginBottom: "4vh" }}>
+
+            <Link onClick={handleVerCategorias} style={{ textDecoration: "none", marginBottom: "4vh" }}>
               <Typography
+                id="typos"
+                className={`panel-link ${verComponente === "categorias" ? "selected" : ""}`}
                 variant="button"
-                onClick={handleVerCategorias}
                 sx={{
                   padding: 1,
-                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
                   textTransform: "none",
                   fontSize: "16px",
-                  backgroundColor: "white",
-                  color: "#16213E",
-                  borderRadius: 1
+                  color: "#E0E0E0",
+                  borderRadius: 1,
                 }}
               >
                 Categorías
               </Typography>
+              <CategoryIcon className={`icons ${verComponente === "categorias" ? "icons-selected" : ""}`} sx={{ color: "white" }} />
             </Link>
-            <Link style={{ textDecoration: "none", marginBottom: "4vh" }}>
+
+            <Link onClick={handleVerUsuarios} style={{ textDecoration: "none", marginBottom: "4vh" }}>
               <Typography
+                id="typos"
+                className={`panel-link ${verComponente === "usuarios" ? "selected" : ""}`}
                 variant="button"
-                onClick={handleVerUsuarios}
                 sx={{
                   padding: 1,
-                  boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
                   textTransform: "none",
                   fontSize: "16px",
-                  backgroundColor: "white",
-                  color: "#16213E",
-                  borderRadius: 1
+                  color: "#E0E0E0",
+                  borderRadius: 1,
                 }}
               >
                 Usuarios
               </Typography>
+              <GroupIcon className={`icons ${verComponente === "usuarios" ? "icons-selected" : ""}`} sx={{ color: "white" }} />
             </Link>
           </Box>
         </Grid>
-
         <Grid
+          className="productos-box"
           item
           xs
           sx={{
-            marginLeft: "20vw",
+            marginLeft: "25vw",
             height: "100%",
             overflowY: "auto",
-            position: "relative", 
-            zIndex: 1, 
-            transition: "margin-left 0.3s", 
+            position: "relative",
+            zIndex: 1,
           }}
         >
-          {verComponente === null && (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignContent: "center",
-                justifyContent: "center",
-                height: "100vh",
-              }}
-            >
-              <Typography
-                variant="h4"
-                sx={{
-                  textAlign: "center",
-                  color: "#16213E",
-                }}
-              >
-                Seleccione una Vista
-              </Typography>
-            </Box>
-          )}
           {verComponente === "productos" && (
             <Box
+              className="produ-box"
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignContent: "center",
                 justifyContent: "center",
                 mt: "10vh",
-                mb: "8vh",
+                mb: "8vh"
               }}
             >
               <PanelProductos />
@@ -213,6 +204,7 @@ const PanelAdmin = ({ adminUser }) => {
             </Box>
           )}
         </Grid>
+
       </Grid>
     </ThemeProvider>
   ) : null;

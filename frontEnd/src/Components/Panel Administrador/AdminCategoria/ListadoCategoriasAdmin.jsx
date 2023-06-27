@@ -3,22 +3,20 @@ import {
   Grid,
   Box,
   Pagination,
-  Typography,
   List,
   ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
+  Typography,
   IconButton,
   Divider,
   Collapse,
-  Tabs,
-  Tab,
 } from "@mui/material";
 import Loading from "../../Loading";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ModificarCategoriaForm from "./ModificarCategoriaForm"
+import ModificarCategoriaForm from "./ModificarCategoriaForm";
+import "../PanelAdmin.css"
+import axios from "axios";
 
 const theme = createTheme({
   palette: {
@@ -31,8 +29,6 @@ const theme = createTheme({
   },
 });
 
-
-
 const ListadoCategoriasAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [categorias, setCategorias] = useState([]);
@@ -41,20 +37,16 @@ const ListadoCategoriasAdmin = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
-
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
-
-      const response = await fetch("http://3.145.94.82:8080/categoria/todas", {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/categoria/todas`, {
         headers: {
           Authorization: `Bearer ${token}`,
-
         },
       });
-
       if (response.status === 200) {
-        const data = await response.json();
+        const data = response.data;
         setCategorias(data);
         setTotalPages(Math.ceil(data.length / itemsPerPage));
         setLoading(false);
@@ -65,6 +57,7 @@ const ListadoCategoriasAdmin = () => {
       console.log("Error fetching data:", error);
     }
   };
+  
 
   useEffect(() => {
     fetchData();
@@ -76,21 +69,20 @@ const ListadoCategoriasAdmin = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(
-        `http://3.145.94.82:8080/categoria/eliminar/${id}`,
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/categoria/eliminar/${id}`,
         {
           method: "DELETE",
         }
       );
-
       if (response.status === 200) {
         swal({
           title: "Eliminado",
           text: "Categoría eliminada correctamente",
           icon: "success",
           timer: 3000,
-          buttons: false
-        })
+          buttons: false,
+        });
         setCategorias((prevItems) =>
           prevItems.filter((categoria) => categoria.id !== id)
         );
@@ -126,7 +118,7 @@ const ListadoCategoriasAdmin = () => {
   }
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Box
         sx={{
           display: "flex",
@@ -134,25 +126,25 @@ const ListadoCategoriasAdmin = () => {
           justifyContent: "center",
           width: "100%",
           mb: "5vh",
-        }}      >
-
+        }}
+      >
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-
           }}
         >
           <List sx={{ width: "100%" }}>
             {currentItems.map((categoria, index) => (
               <Box key={categoria.id}>
                 <ListItem>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={2} sx={{ maxWidth: "1000px", margin: "0 auto" }}>
                     <Grid
                       item
-                      xs={2}
+                      xs={12}
+                      sm={4.5}
                       sx={{
                         display: "flex",
                         justifyContent: "center",
@@ -162,29 +154,48 @@ const ListadoCategoriasAdmin = () => {
                       <img
                         src={categoria.imagen}
                         alt="Imagen Categoria"
-                        style={{ maxHeight: "100px" }}
+                        style={{
+                          maxHeight: "100px",
+                          maxWidth: "100%",
+                          width: "auto",
+                          height: "auto",
+                        }}
                       />
                     </Grid>
-                    <Grid item xs={6}>
-                      <ListItemText
-                        primary={categoria.nombre}
-                        secondary={categoria.descripcion}
-                      />
+                    <Grid item xs={12} sm={4}>
+                      <Typography variant="body1" align="center" fontWeight={"500"} >
+                        {categoria.nombre}
+                      </Typography>
+                      <Typography variant="body2" align="center">
+                        {categoria.descripcion}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={4}
-                      sx={{ display: "flex", alignItems: "center", justifyContent: "space-evenly" }}
+                    <Grid
+                      item
+                      xs={12}
+                      sm={2}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-around",
+                      }}
                     >
                       <IconButton
                         aria-label="Edit"
                         onClick={() => handleEdit(categoria.id)}
                         color="primary"
+                        sx={{'&:hover': {
+                          backgroundColor: 'transparent',
+                        }}}
                       >
                         <EditIcon />
                       </IconButton>
                       <IconButton
                         aria-label="Delete"
                         onClick={() => handleDelete(categoria.id)}
-                        sx={{color:"#CC0000"}}
+                        sx={{ color: "#CC0000", '&:hover': {
+                          backgroundColor: 'transparent',
+                        }}}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -193,7 +204,9 @@ const ListadoCategoriasAdmin = () => {
                 </ListItem>
                 {expandedItem === categoria.id && (
                   <Collapse in={true} timeout="auto" unmountOnExit>
-                    <Box sx={{ p: 2, display: "flex", justifyContent: "center" }}>
+                    <Box
+                      sx={{ p: 2, display: "flex", justifyContent: "center" }}
+                    >
                       <ModificarCategoriaForm categoriaId={categoria.id} />
                     </Box>
                   </Collapse>
@@ -218,7 +231,7 @@ const ListadoCategoriasAdmin = () => {
           </Box>
         )}
       </Box>
-    </>
+    </ThemeProvider>
   );
 };
 

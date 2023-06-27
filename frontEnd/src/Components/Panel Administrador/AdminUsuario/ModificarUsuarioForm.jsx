@@ -9,14 +9,13 @@ import {
   InputLabel,
   TextField,
   Typography,
-  IconButton,
   Select,
   MenuItem,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Loading from "../../Loading";
+import axios from "axios";
 
 const validationSchema = Yup.object({
   nombre: Yup.string().required("El nombre es requerido"),
@@ -36,46 +35,39 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
   const [usuario, setUsuario] = useState(null);
   const [error, setError] = useState(null);
   const [isEditingComplete, setIsEditingComplete] = useState(false);
-
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchUsuario = async () => {
       try {
-        const response = await fetch(
-          `http://3.145.94.82:8080/usuario/${usuarioId}`
-        );
-        const data = await response.json();
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/usuario/${usuarioId}`);
+        const data = response.data;
         setUsuario(data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
-
+  
     fetchUsuario();
   }, [usuario]);
-
+  
   const handleSubmit = async (values, { setSubmitting }) => {
     const { rol, ...otherValues } = values;
     try {
-      const response = await fetch(
-        `http://3.145.94.82:8080/usuario/modificar/${usuarioId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...otherValues,
-            rol: {
-              id: rol.id,
-              nombre: rol.nombre,
-            },
-          }),
-        }
-      );
-      const responseData = await response.json();
-      if (!response.ok) {
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/usuario/modificar/${usuarioId}`, {
+        ...otherValues,
+        rol: {
+          id: rol.id,
+          nombre: rol.nombre,
+        },
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const responseData = response.data;
+      if (response.status !== 200) {
         throw new Error(responseData.message || "An error occurred.");
       }
       setUsuario(responseData);
@@ -145,7 +137,7 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
     >
       {(formikProps) => (
         <Form>
-          <Paper elevation={3} sx={{  pt: 0, width:"50vw" }}>
+          <Paper elevation={3} sx={{ pt: 0, maxWidth: "90vw", margin: "auto" }}>
             <Box
               display="flex"
               flexDirection="column"
@@ -154,11 +146,12 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
               height="100%"
             >
               <Typography variant="h5" sx={{ mt: 3 }}>
-                Modificar usuario
+                Modificar Usuario
               </Typography>
-              <Grid container spacing={2} sx={{ marginTop: "3vh", display:"flex", justifyContent:"center", alignItems:"center" }}>
+              <Grid container spacing={2} sx={{ marginTop: "3vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <Grid item xs={8}>
                   <Field
+                    size="small"
                     name="nombre"
                     as={TextField}
                     label="Nombre"
@@ -166,6 +159,7 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
                     sx={{ marginBottom: "3vh" }}
                   />
                   <Field
+                    size="small"
                     name="apellido"
                     as={TextField}
                     label="Apellido"
@@ -173,19 +167,20 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
                     sx={{ marginBottom: "3vh" }}
                   />
                   <Field
+                    size="small"
                     name="email"
                     as={TextField}
                     label="Email"
                     fullWidth
                     sx={{ marginBottom: "3vh" }}
-                  />                  
+                  />
                 </Grid>
                 <Grid item xs={8}>
                   <FormControl fullWidth sx={{ marginBottom: "3vh" }}>
                     <InputLabel>Rol</InputLabel>
-                    <Field as={Select} name="rol.id" label="Rol">
-                      <MenuItem value={1}>usuario</MenuItem>
-                      <MenuItem value={2}>administrador</MenuItem>
+                    <Field as={Select} name="rol.id" label="Rol" size="small">
+                      <MenuItem value={1}>Usuario</MenuItem>
+                      <MenuItem value={2}>Administrador</MenuItem>
                       {/* Add more MenuItem options as needed */}
                     </Field>
                     <FormHelperText>
@@ -197,9 +192,9 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
                 <Grid item xs={8}>
                   <FormControl fullWidth sx={{ marginBottom: "3vh" }}>
                     <InputLabel>Verificado</InputLabel>
-                    <Field as={Select} name="verificado" label="verificado">
-                      <MenuItem value={0}>no</MenuItem>
-                      <MenuItem value={1}>si</MenuItem>
+                    <Field as={Select} name="verificado" label="verificado" size="small">
+                      <MenuItem value={0}>No</MenuItem>
+                      <MenuItem value={1}>Si</MenuItem>
                       {/* Add more MenuItem options as needed */}
                     </Field>
                     <FormHelperText>
@@ -208,16 +203,17 @@ const ModificarUsuarioForm = ({ usuarioId }) => {
                     </FormHelperText>
                   </FormControl>
                 </Grid>
-                
+
               </Grid>
-              <Box  display="flex" justifyContent="center" alignItems="center">
+              <Box display="flex" justifyContent="center" alignItems="center">
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
                   disabled={formikProps.isSubmitting}
+                  sx={{ textTransform: "none", mb:4 }}
                 >
-                  Guardar cambios
+                  Guardar Cambios
                 </Button>
               </Box>
               {error && (
