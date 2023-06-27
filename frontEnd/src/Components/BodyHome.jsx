@@ -488,7 +488,8 @@ const BodyHome = () => {
           ))}
         </Box>
       )}
-      {!categoriaElegida && !resultadoBusqueda ? (
+      {<Random10 />
+      /* {!categoriaElegida && !resultadoBusqueda ? (
         <Random10 />
       ) : resultadoBusqueda && resultadoBusqueda.length > 0 ? (
         <ResultadosBusqueda productos={resultadoBusqueda} />
@@ -497,7 +498,7 @@ const BodyHome = () => {
           categoria_id={categoriaElegida}
           categoriaDetalle={categoriaDetalle}
         />
-      ) : <Random10 />}
+      ) : null} */}
     </Box>
   );
 };
