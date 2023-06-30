@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&display=swap");
+
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+  font-family: "Lato";
+}
+.formulario {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+}
+.login {
+  padding: 50px;
+  border-radius: 6px;
+  box-shadow: 1px 1px 5px 1px #c6c6c6fd;
+  background-color: #fcfcfc9c;
+  height: 60vh;
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.login .input-login {
+  background-color: #f6f4f4;
+  box-shadow: 2px 2px 3px #16213ea8;
+  width: 20vw;
+}
+.login .graphy {
+  font-size: 30px;
+  background-color: #16213e;
+  border-radius: 5px;
+  color: #ffffff;
+  text-align: center;
+  width: 28vw;
+  max-width: 25vw;
+}
+Button.ingresar {
+  background-color: #16213e;
+  border-radius: 5px;
+  width: 9vw;
+  border-radius: 3px;
+  width: 8vw;
+  text-transform: none;
+}
+
+/* ========================MEDIAS=============================== */
+
+@media screen and (max-width: 1300px) {
+  .login .input-login {
+    width: 31vw;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .login .input-login {
+    width: 33vw;
+  }
+}
+@media screen and (max-width: 768px) {
+  .login {
+    width: 60vw;
+  }
+  .login .input-login {
+    width: 40vw;
+  }
+}
+@media screen and (max-width: 426px) {
+  .login {
+    width: 80vw;
+  }
+  .login .input-login {
+    width: 60vw;
+  }
+  #iniciarSesion {
+    font-size: 25px;
+  }
+}

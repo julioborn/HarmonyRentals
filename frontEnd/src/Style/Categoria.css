@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.categoria {
+  display: flex;
+  justify-content: space-evenly;
+  /* align-content: center; */
+  flex-wrap: wrap;
+  cursor: pointer;
+  padding-top: 2vh;
+  /*background: linear-gradient(0deg, #ffffff 3%, #c8c9ca 15%, #fcfcfc 100%);*/
+  background-color: #F0F0F0;
+}
+
+.catego {
+  background-color: #16213e;
+  border-radius: 3px;
+  text-align: center;
+  padding-bottom: 7px;
+}
+
+img {
+  border-radius: 3px 3px;
+  height: auto;
+  width: 13rem;
+  transition: 0.5s;
+}
+
+.categoria :hover {
+  background-color: #e94560;
+  transition: 1s;
+}
+
+h3 {
+  color: #ffffff;
+}
+
+
+/* ========================MEDIAS=============================== */
+
+@media screen and (max-width: 1260px) {
+  .categoria {
+    gap: 35px;
+  }
+
+  img {
+    height: auto;
+    width: 25rem;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .categoria {
+    gap: 20px ;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .carousel-container div {
+    height: 11em !important;
+    background: linear-gradient(0deg, #ffffff -10%, #16213e 99.9%, #fffffa 90%);
+  }
+}
