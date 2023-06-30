@@ -303,6 +303,10 @@
   .btn-add {
     margin-top: 15px !important;
   }
+
+  .description {
+    width: 16.5rem !important
+  }
 }
 
 @media screen and (max-width: 330px) {
