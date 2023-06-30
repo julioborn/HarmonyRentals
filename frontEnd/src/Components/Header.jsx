@@ -128,7 +128,7 @@ const Header = () => {
           <Toolbar className="toolBar">
             <Box>
               <Link to="/" onClick={handleReload}>
-                <img src="/public/images/HARMONY_RENTALS_4.png" alt="Logo" id="logoHeader" />
+                <img src="/images/HARMONY_RENTALS_4.png" alt="Logo" id="logoHeader" />
               </Link>
             </Box>
             <Box className="lema">

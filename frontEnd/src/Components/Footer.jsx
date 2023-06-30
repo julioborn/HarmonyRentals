@@ -49,7 +49,7 @@ const Footer = () => {
                 <Box className='boxFoot1'>
                     <Box className='footer-left'>
                         <Box className='logo-foot'>
-                            <Avatar src='/public/images/footerlogo.png' sx={{ width: '30px', height: '30px', mr: "10px" }} />
+                            <Avatar src='/images/footerlogo.png' sx={{ width: '30px', height: '30px', mr: "10px" }} />
                         </Box>
                         <Typography className='texto'>
                             2023 Harmony Rentals ©
