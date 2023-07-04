@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&display=swap');
+
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+.misreservas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color:#F5F8FA ;
+    padding-top: 8em;
+    padding-bottom: 5em;
+}
+.misreservas-paper{
+    height: 850px;
+    width: 95vw;
+}
+.misreservas-typo{
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin: 2em 0 1em 0;
+}
+.misreserva-grid{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.misreservas-list{
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    box-shadow: 1px 2px 3px -1px;
+    margin-bottom: 0.5em;
+    text-align: center;
+    display: flex;
+}
+.papelera{
+    color: #CC0000;
+    margin-right: 0.5em;
+    margin-bottom: 1em;
+}
+.btn-misreservas{
+    color: #16213e;
+    position: absolute;
+    left: 77vw;
+}
+
+/* ========================MEDIAS=============================== */
+
+@media screen and (max-width: 931px) {
+    /*.box-principal{
+        width: "200px" !important
+    }*/
+    .papelera{
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 831px) {
+    .paper-reservas{
+        width: 700px !important;
+        max-width: 1000px !important;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .paper-reservas{
+        width: auto !important;
+        min-height: 83vh !important;
+    }
+    .titulos-reservas{
+        flex-direction: column;
+        gap: 0 !important;
+    }
+    .foto-descripcion{
+        flex-direction: column;
+        gap: 0 !important;
+    }
+    .misreservas-list{
+        display: none;
+    }
+}
+@media screen and (max-width: 376px) {
+    .desdehasta{
+        flex-direction: column;
+        gap: 0 !important;
+    }
+    .descripcion{
+        font-size: 15px !important;
+    }
+}
+

@@ -1,0 +1,294 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,700;1,400&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+.toolBar {
+  background: #16213e;
+  height: 6.3em;
+  width: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+}
+
+#logoHeader {
+  width: 28%;
+  margin-left: 8px;
+}
+
+#iniciales {
+  display: flex;
+  height: 50px;
+  width: 50px;
+}
+
+#cuenta {
+  width: 60%;
+}
+
+#mis-datos {
+  box-shadow: 0px 1px 1px 0px #c7c7c7ca;
+  color: #16213e;
+  font-weight: bold;
+}
+
+.toolBar .menu {
+  display: none;
+}
+
+.toolBar .avatar-init {
+  display: flex;
+  justify-content: center;
+}
+
+.toolBar .boton {
+  background: linear-gradient(to bottom right, #ffffff, #d3d3d3);
+  border-radius: 4px;
+  display: inline-block;
+  cursor: pointer;
+  color: #16213e;
+  font-family: Arial;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 7px 15px;
+  text-decoration: none;
+  margin-right: 15px;
+  text-align: center;
+  text-transform: none;
+  width: auto;
+}
+
+.toolBar .boton:hover {
+  box-shadow: 0px 0px 5px 2px rgba(238, 57, 117, 0.75);
+  background: linear-gradient(to bottom right, #d3d3d3, #ffffff);
+
+}
+
+.boton2 {
+  text-decoration: none;
+  text-transform: none;
+  color: #16213e;
+}
+
+.header-text.show {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* texto animado */
+.header-text {
+  white-space: pre;
+  /* Preservar espacios en blanco */
+
+  font-style: oblique;
+  font-size: 25px;
+  font-family: "Lucida Sans", Geneva, Verdana, sans-serif;
+  text-decoration: none;
+  line-height: 1em;
+  opacity: 0.7;
+  letter-spacing: 0.6em;
+  text-align: center;
+}
+
+.lema {
+  position: absolute;
+  left: 33vw;
+}
+
+.header-text span {
+  display: inline-block;
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+
+.header-text span:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.header-text span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.header-text span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.header-text span:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.header-text span:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.header-text span:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.header-text span:nth-child(7) {
+  animation-delay: 0.7s;
+}
+
+.header-text span:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+.header-text span:nth-child(9) {
+  animation-delay: 0.9s;
+}
+
+.header-text span:nth-child(10) {
+  animation-delay: 0.1s;
+}
+
+.header-text span:nth-child(11) {
+  animation-delay: 0.11s;
+}
+
+.header-text span:nth-child(12) {
+  animation-delay: 0.12s;
+}
+
+.header-text span:nth-child(13) {
+  animation-delay: 0.13s;
+}
+
+.header-text span:nth-child(14) {
+  animation-delay: 0.14s;
+}
+
+.header-text span:nth-child(15) {
+  animation-delay: 0.15s;
+}
+
+.header-text span:nth-child(16) {
+  animation-delay: 0.16s;
+}
+
+.header-text span:nth-child(17) {
+  animation-delay: 0.17s;
+}
+
+.header-text span:nth-child(18) {
+  animation-delay: 0.18s;
+}
+
+.header-text span:nth-child(19) {
+  animation-delay: 0.19s;
+}
+
+.header-text span:nth-child(20) {
+  animation-delay: 0.3s;
+}
+
+.botonadmin,
+.name {
+  text-decoration: none;
+  color: #16213e;
+}
+
+#title {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================MEDIAS=============================== */
+
+@media screen and (max-width: 1309px) {
+  .butonsBox {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .toolBar .boton {
+    width: 130px;
+    flex-direction: column;
+    margin: 2px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .toolBar .lema {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .toolBar .avatar-init {
+    display: flex;
+  }
+
+  .toolBar .boton {
+    padding: 4px 10px;
+  }
+
+  #butonsBox {
+    width: 40vw;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+  }
+
+  .toolBar .menu {
+    display: none;
+  }
+
+  .toolBar .header-text {
+    display: none;
+  }
+
+  .burger-menu {
+    margin-top: 4em;
+  }
+
+  #logoHeader {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 583px) {
+  #logoHeader {
+    width: 50%;
+  }
+
+  .toolbar {
+    background-color: red;
+
+  }
+
+  .toolBar .avatar-init {
+    display: none;
+  }
+
+  .toolBar .menu {
+    display: flex;
+    width: 60px;
+    height: 40px;
+  }
+
+  .toolBar .header-text {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 433px) {
+  #logoHeader {
+    width: 65%;
+  }
+}

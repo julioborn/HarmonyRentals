@@ -1,0 +1,19 @@
+.error-message {
+    color: red;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+ margin-bottom: -2.3vh;
+}
+
+.usuarioFormField {
+    background-color: white;
+}
+
+.input #dni:focus {
+    border-color: red !important;
+}
+
+.my-swal {
+    font-size: 14px;
+}
