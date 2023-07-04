@@ -55,7 +55,7 @@ const CalculadorAlquiler = ({ producto, fechaDesde, fechaHasta }) => {
       valor: producto?.precio_x_dia * numeroDias,
     };
 
-    fetch("http://localhost:8080/alquiler/agregar", {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/alquiler/agregar`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
